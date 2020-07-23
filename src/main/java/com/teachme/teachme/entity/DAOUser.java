@@ -44,12 +44,13 @@ public class DAOUser {
     @Size(min = 6, message = "Password must be between 6 and 15 characters")
     private String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "USER_AUTHORITY",
             joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_NAME", referencedColumnName = "NAME")})
     private Set<Authority> authorities = new HashSet<>();
+
 
     @CreationTimestamp
     private LocalDateTime created_date;

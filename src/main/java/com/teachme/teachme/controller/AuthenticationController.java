@@ -47,6 +47,7 @@ public class AuthenticationController {
     @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
+        System.out.println("Here");
         Authentication authentication = authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -70,6 +71,11 @@ public class AuthenticationController {
             return authenticate;
         } catch (BadCredentialsException e) {
             throw new Exception("INVALID_CREDENTIALS", e);
+        }
+        catch (Exception e)
+        {
+            //System.out.println(e);
+            throw new Exception("EXCEPTION", e);
         }
 
     }

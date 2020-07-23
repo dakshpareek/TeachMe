@@ -20,4 +20,6 @@ public interface UserDao extends JpaRepository<DAOUser, Integer> {
 
     //boolean findByEmail(String email);
     boolean existsByEmail(String email);
+
+    void deleteByEmail(String email);
 }
