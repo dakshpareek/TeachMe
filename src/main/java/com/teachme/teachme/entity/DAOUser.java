@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
+import com.teachme.teachme.entity.Skill;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -44,6 +45,14 @@ public class DAOUser {
     @Size(min = 6, message = "Password must be between 6 and 15 characters")
     private String password;
 
+
+    @CreationTimestamp
+    private LocalDateTime created_date;
+
+    @UpdateTimestamp
+    private LocalDateTime updated_date;
+
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "USER_AUTHORITY",
@@ -52,10 +61,14 @@ public class DAOUser {
     private Set<Authority> authorities = new HashSet<>();
 
 
-    @CreationTimestamp
-    private LocalDateTime created_date;
+    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "USER_SKILL",
+            joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "SKILL_ID", referencedColumnName = "ID")})
+    private Set<Skill> skills = new HashSet<>();
 
-    @UpdateTimestamp
-    private LocalDateTime updated_date;
+
+
 
 }

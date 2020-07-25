@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -57,7 +59,7 @@ public class AuthorityService {
         return userService.setAuthority(authority.get());
     }
 
-    public void deleteAuthorityService(AuthorityDTO authorityDTO) {
+    public ResponseEntity deleteAuthorityService(AuthorityDTO authorityDTO) {
         if (authorityRepository.existsByName(authorityDTO.getName()) == false)
         {
             throw new CustomException(
@@ -68,6 +70,12 @@ public class AuthorityService {
 
         //delete this authority from table
         authorityRepository.deleteByName(authorityDTO.getName());
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("message","Authority deleted");
+        body.put("status",200);
+        body.put("path","/authority");
+        return new ResponseEntity(body,HttpStatus.OK);
     }
 
     public DAOUser removeAuthorityService(AuthorityDTO authorityDTO) {

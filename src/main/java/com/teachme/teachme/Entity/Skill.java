@@ -1,8 +1,6 @@
-package com.teachme.teachme.Entity;
+package com.teachme.teachme.entity;
 
 import com.sun.istack.NotNull;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -10,8 +8,8 @@ import javax.persistence.*;
 public class Skill {
 
     @Id
-    @GeneratedValue
-    private int skill_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @NotNull
     @Column( unique = true)
@@ -32,12 +30,12 @@ public class Skill {
         this.isdeleted = false;
     }
 
-    public int getSkill_id() {
-        return skill_id;
+    public int getId() {
+        return id;
     }
 
-    public void setSkill_id(int skill_id) {
-        this.skill_id = skill_id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

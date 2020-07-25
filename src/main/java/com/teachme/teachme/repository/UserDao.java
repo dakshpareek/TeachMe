@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserDao extends JpaRepository<DAOUser, Integer> {
-    //DAOUser findByUsername(String username);
+    DAOUser findByEmail(String username);
 
     //@EntityGraph(attributePaths = "authorities")
     //Optional<DAOUser> findOneWithAuthoritiesByUsername(String username);

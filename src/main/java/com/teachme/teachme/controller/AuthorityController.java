@@ -36,12 +36,7 @@ public class AuthorityController {
     @DeleteMapping("/authority")
     public ResponseEntity deleteAuthority(@Valid @RequestBody AuthorityDTO authorityDTO)
     {
-        authorityService.deleteAuthorityService(authorityDTO);
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("message","Authority deleted");
-        body.put("status",200);
-        body.put("path","/authority");
-        return new ResponseEntity(body,HttpStatus.OK);
+        return authorityService.deleteAuthorityService(authorityDTO);
     }
 
     @PostMapping("/assign_authority")
