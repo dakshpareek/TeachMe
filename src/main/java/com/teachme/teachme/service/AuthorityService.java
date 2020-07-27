@@ -1,13 +1,10 @@
 package com.teachme.teachme.service;
 
 import com.teachme.teachme.entity.Authority;
-import com.teachme.teachme.entity.AuthorityDTO;
+import com.teachme.teachme.DTO.AuthorityDTO;
 import com.teachme.teachme.entity.DAOUser;
-import com.teachme.teachme.entity.UserDTO;
 import com.teachme.teachme.exceptionhandler.CustomException;
 import com.teachme.teachme.repository.AuthorityRepository;
-import com.teachme.teachme.repository.UserDao;
-import com.teachme.teachme.security.SecurityUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

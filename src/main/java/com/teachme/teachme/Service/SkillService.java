@@ -37,6 +37,7 @@ public class SkillService {
 
     }
 
+
     public ResponseEntity<Skill> getparticularskill( int skill_id ){
 
         Optional< Skill > skillOptional = skillRepository.findById( skill_id );
@@ -50,6 +51,7 @@ public class SkillService {
         return new ResponseEntity<Skill>( skillOptional.get(), HttpStatus.OK );
     }
 
+    /*
     public Map<String, Object> addSkill(SkillDTO skillDTO){
 
         Optional<Skill> skillOptional = skillRepository.findByName( skillDTO.getName() );
@@ -150,6 +152,15 @@ public class SkillService {
     }
 
 
+     */
 
-
+    public Map<String, Object> deleteSkill(long skill_id) {
+        //delete this skill from database and remove this skill from all associated projects
+        skillRepository.deleteSkillById(skill_id);
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("message","Skill Deleted");
+        body.put("status",200);
+        body.put("path","/");
+        return body;
+    }
 }

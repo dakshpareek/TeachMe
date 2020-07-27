@@ -1,11 +1,9 @@
 package com.teachme.teachme.service;
 
 import com.teachme.teachme.entity.Authority;
-import com.teachme.teachme.entity.AuthorityDTO;
 import com.teachme.teachme.entity.DAOUser;
 import com.teachme.teachme.repository.UserDao;
 import com.teachme.teachme.security.SecurityUtils;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,7 +61,9 @@ public class UserService {
     public void removeUser() {
         //delete current user
         String currentUsername = SecurityUtils.getCurrentUsername().get();
+
         userRepository.deleteByEmail(currentUsername);
+        //userRepository.deleteByUserId(currentUsername)
 
         //reset context of application
         SecurityContextHolder.clearContext();

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface SkillRepository extends JpaRepository< Skill, Integer > {
+public interface SkillRepository extends JpaRepository< Skill, Integer > ,SkillRepositoryCustom{
 
     @Query( "select s from Skill s where s.verificationstatus = :vstatus and s.isdeleted = :dstatus" )
     List<Skill> findAllByVerificationAAndIsdeleted( boolean vstatus, boolean dstatus  );

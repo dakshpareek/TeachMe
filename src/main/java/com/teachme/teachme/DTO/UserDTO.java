@@ -1,4 +1,4 @@
-package com.teachme.teachme.entity;
+package com.teachme.teachme.DTO;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;

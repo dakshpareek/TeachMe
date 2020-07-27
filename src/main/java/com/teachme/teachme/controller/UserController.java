@@ -43,6 +43,7 @@ public class UserController {
     @DeleteMapping("/user")
     public ResponseEntity removeUser()
     {
+
         userService.removeUser();
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("message","User Removed");

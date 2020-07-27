@@ -17,6 +17,7 @@ public class UserSkillController {
         this.userSkillService = userSkillService;
     }
 
+    /*
     @GetMapping("/skills")
     public ResponseEntity skillsOfUser()
     {
@@ -35,5 +36,7 @@ public class UserSkillController {
     {
         return new ResponseEntity(userSkillService.deleteSkillsofUser(skillWrapper),HttpStatus.ACCEPTED);
     }
+    */
+
 
 }

@@ -1,25 +1,42 @@
 package com.teachme.teachme.entity;
 
 import com.sun.istack.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 public class Skill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @NotNull
     @Column( unique = true)
     private String name;
 
+    @Column
     private String description;
 
+    @Column
     private boolean verificationstatus;
 
+    @Column
     private boolean isdeleted;
+
+    @ManyToMany(mappedBy = "skills",cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private Set<Experience> experienceSet = new HashSet<>();
+
+
+    @ManyToMany(mappedBy = "skills",cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private Set<DAOUser> daoUserSet = new HashSet<>();
+
 
     public Skill(){ }
 
@@ -30,43 +47,15 @@ public class Skill {
         this.isdeleted = false;
     }
 
-    public int getId() {
-        return id;
+    public void addExperience(Experience experience) {
+        experienceSet.add(experience);
+        experience.getSkills().add(this);
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void addUser(DAOUser user)
+    {
+        daoUserSet.add(user);
+        user.getSkills().add(this);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public boolean isVerificationstatus() {
-        return verificationstatus;
-    }
-
-    public void setVerificationstatus(boolean verificationstatus) {
-        this.verificationstatus = verificationstatus;
-    }
-
-    public boolean isIsdeleted() {
-        return isdeleted;
-    }
-
-    public void setIsdeleted(boolean isdeleted) {
-        this.isdeleted = isdeleted;
-    }
 }

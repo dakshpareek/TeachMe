@@ -1,10 +1,9 @@
 package com.teachme.teachme.controller;
 
 import com.teachme.teachme.entity.Authority;
-import com.teachme.teachme.entity.AuthorityDTO;
+import com.teachme.teachme.DTO.AuthorityDTO;
 import com.teachme.teachme.entity.DAOUser;
 import com.teachme.teachme.service.AuthorityService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 @RestController
 @Validated

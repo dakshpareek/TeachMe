@@ -31,6 +31,7 @@ public class SkillResource {
         return skillService.getparticularskill( skill_id );
     }
 
+    /*
     @PostMapping("/skills")
     public ResponseEntity addNewSkill(@RequestBody SkillDTO skillDTO ){
 
@@ -54,5 +55,13 @@ public class SkillResource {
     public ResponseEntity<String> updateSkillDetails( @PathVariable int skill_id, @RequestBody UpdateSkillDTO skilldetails ){
 
         return skillService.updateskilldetails( skill_id, skilldetails );
+    }
+
+     */
+
+    @DeleteMapping("/skills/{skill_id}")
+    public ResponseEntity<?> deleteSkill(@PathVariable int skill_id)
+    {
+        return new ResponseEntity(skillService.deleteSkill(skill_id),HttpStatus.OK);
     }
 }

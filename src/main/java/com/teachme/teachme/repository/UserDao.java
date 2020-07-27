@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserDao extends JpaRepository<DAOUser, Integer> {
+public interface UserDao extends JpaRepository<DAOUser, Integer> ,UserDaoRepositoryCustom{
     DAOUser findByEmail(String username);
 
     //@EntityGraph(attributePaths = "authorities")
