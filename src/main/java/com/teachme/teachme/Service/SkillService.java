@@ -17,8 +17,12 @@ import java.util.Optional;
 @Service
 public class SkillService {
 
-    @Autowired
     SkillRepository skillRepository;
+
+    public SkillService( SkillRepository skillRepository ){
+
+        this.skillRepository = skillRepository;
+    }
 
     public ResponseEntity<List<Skill>> getAllSkills(){
 

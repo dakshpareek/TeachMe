@@ -11,44 +11,49 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@RequestMapping("/api")
 @RestController
 public class SkillResource {
 
-    @Autowired
     SkillService skillService;
 
-    @GetMapping( "/api/skills" )
+    public SkillResource( SkillService skillService ){
+
+        this.skillService = skillService;
+    }
+
+    @GetMapping( "/skills" )
     public ResponseEntity<List<Skill>> getSkills(){
 
         return skillService.getAllSkills();
     }
 
-    @GetMapping( "/api/skills/{skill_id}" )
+    @GetMapping( "/skills/{skill_id}" )
     public ResponseEntity<Skill> getParticularSkill( @PathVariable int skill_id ){
 
         return skillService.getparticularskill( skill_id );
     }
 
-    @PostMapping( "/api/skills" )
+    @PostMapping( "/skills" )
     public ResponseEntity<String> addNewSkill(@RequestBody SkillDTO skillDTO ){
 
         return skillService.addSkill( skillDTO );
     }
 
-    @PatchMapping( "/api/skills/deleteStatus/{skill_id}" )
+    @PatchMapping( "/skills/deleteStatus/{skill_id}" )
     public ResponseEntity<String> changeDeleteStatus( @PathVariable int skill_id ){
 
         return skillService.changedeletestatus( skill_id );
     }
 
-    @PatchMapping( "/api/skills/verificationstatus/{skill_id}" )
+    @PatchMapping( "/skills/verificationstatus/{skill_id}" )
     public ResponseEntity<String> changeVerificationStatus( @PathVariable int skill_id ){
 
         return skillService.changeverificationstatus( skill_id );
     }
 
 
-    @PutMapping( "/api/skills/{skill_id}" )
+    @PutMapping( "/skills/{skill_id}" )
     public ResponseEntity<String> updateSkillDetails( @PathVariable int skill_id, @RequestBody UpdateSkillDTO skilldetails ){
 
         return skillService.updateskilldetails( skill_id, skilldetails );
