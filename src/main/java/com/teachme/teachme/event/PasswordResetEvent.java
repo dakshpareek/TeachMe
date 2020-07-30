@@ -1,6 +1,6 @@
 package com.teachme.teachme.event;
 
-import com.teachme.teachme.Entity.DAOUser;
+import com.teachme.teachme.entity.DAOUser;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.context.ApplicationEvent;

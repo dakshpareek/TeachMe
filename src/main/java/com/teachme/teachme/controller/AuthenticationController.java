@@ -1,8 +1,8 @@
-package com.teachme.teachme.Controller;
+package com.teachme.teachme.controller;
 
-import com.teachme.teachme.DTO.UserDTO;
-import com.teachme.teachme.Entity.DAOUser;
-import com.teachme.teachme.Entity.RegistrationToken;
+import com.teachme.teachme.dto.UserDTO;
+import com.teachme.teachme.entity.DAOUser;
+import com.teachme.teachme.entity.RegistrationToken;
 import com.teachme.teachme.Service.UserService;
 import com.teachme.teachme.event.OnRegistrationEvent;
 import com.teachme.teachme.jwt.JwtTokenUtil;

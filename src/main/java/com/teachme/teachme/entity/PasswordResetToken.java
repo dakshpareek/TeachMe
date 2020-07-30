@@ -1,11 +1,9 @@
-package com.teachme.teachme.Entity;
+package com.teachme.teachme.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.context.ApplicationEvent;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 

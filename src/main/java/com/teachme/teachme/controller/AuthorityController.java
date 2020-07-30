@@ -1,10 +1,9 @@
-package com.teachme.teachme.Controller;
+package com.teachme.teachme.controller;
 
-import com.teachme.teachme.Entity.Authority;
-import com.teachme.teachme.DTO.AuthorityDTO;
-import com.teachme.teachme.Entity.DAOUser;
+import com.teachme.teachme.entity.Authority;
+import com.teachme.teachme.dto.AuthorityDTO;
+import com.teachme.teachme.entity.DAOUser;
 import com.teachme.teachme.Service.AuthorityService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 @RestController
 @Validated
@@ -36,12 +33,7 @@ public class AuthorityController {
     @DeleteMapping("/authority")
     public ResponseEntity deleteAuthority(@Valid @RequestBody AuthorityDTO authorityDTO)
     {
-        authorityService.deleteAuthorityService(authorityDTO);
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("message","Authority deleted");
-        body.put("status",200);
-        body.put("path","/authority");
-        return new ResponseEntity(body,HttpStatus.OK);
+        return authorityService.deleteAuthorityService(authorityDTO);
     }
 
     @PostMapping("/assign_authority")

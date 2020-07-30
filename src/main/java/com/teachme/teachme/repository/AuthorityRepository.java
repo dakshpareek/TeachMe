@@ -1,7 +1,7 @@
-package com.teachme.teachme.Repository;
+package com.teachme.teachme.repository;
 
 
-import com.teachme.teachme.Entity.Authority;
+import com.teachme.teachme.entity.Authority;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

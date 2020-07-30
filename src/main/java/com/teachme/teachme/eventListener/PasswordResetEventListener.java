@@ -1,16 +1,13 @@
 package com.teachme.teachme.eventListener;
 
-import com.teachme.teachme.Entity.DAOUser;
+import com.teachme.teachme.entity.DAOUser;
 import com.teachme.teachme.Mail;
 import com.teachme.teachme.Service.UserService;
-import com.teachme.teachme.event.OnRegistrationEvent;
 import com.teachme.teachme.event.PasswordResetEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;

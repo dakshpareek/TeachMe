@@ -1,23 +1,29 @@
-package com.teachme.teachme.Service;
+package com.teachme.teachme.service;
 
-import com.teachme.teachme.DTO.SkillDTO;
-import com.teachme.teachme.DTO.UpdateSkillDTO;
-import com.teachme.teachme.Entity.Skill;
-import com.teachme.teachme.Repository.SkillRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.teachme.teachme.repository.AuthorityRepository;
+import com.teachme.teachme.repository.UserDao;
+import com.teachme.teachme.repository.SkillRepository;
+import com.teachme.teachme.entity.Skill;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
-import javax.persistence.EntityManager;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class SkillService {
 
-    SkillRepository skillRepository;
+
+    private SkillRepository skillRepository;
+    private UserDao userRepository;
+    private AuthorityRepository authorityRepository;
+
+    public SkillService(SkillRepository skillRepository,
+                        UserDao userRepository,AuthorityRepository authorityRepository) {
+        this.skillRepository = skillRepository;
+        this.userRepository = userRepository;
+        this.authorityRepository = authorityRepository;
+    }
 
     public SkillService( SkillRepository skillRepository ){
 
@@ -29,6 +35,7 @@ public class SkillService {
         return new ResponseEntity<List<Skill>>(skillRepository.findAllByVerificationAAndIsdeleted( true, false ), HttpStatus.OK);
 
     }
+
 
     public ResponseEntity<Skill> getparticularskill( int skill_id ){
 
@@ -43,19 +50,43 @@ public class SkillService {
         return new ResponseEntity<Skill>( skillOptional.get(), HttpStatus.OK );
     }
 
-    public ResponseEntity< String > addSkill(SkillDTO skillDTO){
+    /*
+    public Map<String, Object> addSkill(SkillDTO skillDTO){
 
         Optional<Skill> skillOptional = skillRepository.findByName( skillDTO.getName() );
 
         if( skillOptional.isPresent() ){
 
-            return new ResponseEntity<String>( "Skill already exsists", HttpStatus.CONFLICT );
+            throw new CustomException("Skill Exists",HttpStatus.BAD_REQUEST,"/skills");
         }
-        else{
 
-            skillRepository.save( new Skill( skillDTO.getName() ) );
-            return new ResponseEntity<String>( "Skill added and under verification", HttpStatus.OK );
+        Skill skill = new Skill( skillDTO.getName());
+        skill.setVerificationstatus(false);
+        skillRepository.save(skill);
+
+        //now if user is not admin then save it to user also
+        String currentUsername = SecurityUtils.getCurrentUsername().get();
+        DAOUser user = userRepository.findByEmail(currentUsername);
+        Set<Authority> authorities = user.getAuthorities();
+
+        Authority authority = authorityRepository.findByName("ROLE_ADMIN").get();
+
+        if(authorities.contains(authority) == false)
+        {
+            Set<Skill> skillList = user.getSkills();
+            skillList.add(skill);
+            user.setSkills(skillList);
+            userRepository.save(user);
         }
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("message","Skill Added");
+        body.put("status",200);
+        body.put("path","/");
+        return body;
+
+        //return new ResponseEntity<String>( "Skill added and under verification", HttpStatus.OK );
+
     }
 
 
@@ -120,6 +151,15 @@ public class SkillService {
     }
 
 
+     */
 
-
+    public Map<String, Object> deleteSkill(long skill_id) {
+        //delete this skill from database and remove this skill from all associated projects
+        skillRepository.deleteSkillById(skill_id);
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("message","Skill Deleted");
+        body.put("status",200);
+        body.put("path","/");
+        return body;
+    }
 }

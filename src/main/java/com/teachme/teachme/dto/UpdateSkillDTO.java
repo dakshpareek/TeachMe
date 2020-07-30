@@ -1,4 +1,4 @@
-package com.teachme.teachme.DTO;
+package com.teachme.teachme.dto;
 
 public class UpdateSkillDTO {
 

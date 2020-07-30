@@ -1,10 +1,10 @@
 package com.teachme.teachme.security;
 
 
-import com.teachme.teachme.Entity.DAOUser;
-import com.teachme.teachme.DTO.UserDTO;
+import com.teachme.teachme.entity.DAOUser;
+import com.teachme.teachme.dto.UserDTO;
 import com.teachme.teachme.exceptionhandler.CustomException;
-import com.teachme.teachme.Repository.UserDao;
+import com.teachme.teachme.repository.UserDao;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

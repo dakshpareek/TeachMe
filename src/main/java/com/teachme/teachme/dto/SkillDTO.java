@@ -1,7 +1,4 @@
-package com.teachme.teachme.DTO;
-
-import lombok.Getter;
-import lombok.Setter;
+package com.teachme.teachme.dto;
 
 public class SkillDTO {
 

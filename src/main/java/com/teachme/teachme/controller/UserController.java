@@ -1,10 +1,9 @@
-package com.teachme.teachme.Controller;
+package com.teachme.teachme.controller;
 
-import com.teachme.teachme.Entity.DAOUser;
+import com.teachme.teachme.entity.DAOUser;
 import com.teachme.teachme.exceptionhandler.CustomException;
 
 import com.teachme.teachme.Service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,6 +37,7 @@ public class UserController {
     @DeleteMapping("/user")
     public ResponseEntity removeUser()
     {
+
         userService.removeUser();
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("message","User Removed");

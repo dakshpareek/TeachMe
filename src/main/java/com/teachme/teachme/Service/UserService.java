@@ -1,13 +1,13 @@
 package com.teachme.teachme.Service;
 
-import com.teachme.teachme.DTO.NewPasswordDTO;
-import com.teachme.teachme.Entity.Authority;
-import com.teachme.teachme.Entity.DAOUser;
-import com.teachme.teachme.Entity.PasswordResetToken;
-import com.teachme.teachme.Entity.RegistrationToken;
-import com.teachme.teachme.Repository.PasswordResetTokenRepository;
-import com.teachme.teachme.Repository.RegistrationTokenRepository;
-import com.teachme.teachme.Repository.UserDao;
+import com.teachme.teachme.dto.NewPasswordDTO;
+import com.teachme.teachme.entity.Authority;
+import com.teachme.teachme.entity.DAOUser;
+import com.teachme.teachme.entity.PasswordResetToken;
+import com.teachme.teachme.entity.RegistrationToken;
+import com.teachme.teachme.repository.PasswordResetTokenRepository;
+import com.teachme.teachme.repository.RegistrationTokenRepository;
+import com.teachme.teachme.repository.UserDao;
 import com.teachme.teachme.security.SecurityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -78,6 +78,8 @@ public class UserService {
     public void removeUser() {
         //delete current user
         String currentUsername = SecurityUtils.getCurrentUsername().get();
+        userRepository.deleteByEmail(currentUsername);
+
         userRepository.deleteByEmail(currentUsername);
 
         //reset context of application

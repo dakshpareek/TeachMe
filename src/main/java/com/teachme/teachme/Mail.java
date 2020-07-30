@@ -1,6 +1,6 @@
 package com.teachme.teachme;
 
-import com.teachme.teachme.Entity.DAOUser;
+import com.teachme.teachme.entity.DAOUser;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Component;
 

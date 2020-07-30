@@ -1,12 +1,10 @@
-package com.teachme.teachme.Controller;
+package com.teachme.teachme.controller;
 
-import com.teachme.teachme.DTO.NewPasswordDTO;
-import com.teachme.teachme.Entity.DAOUser;
-import com.teachme.teachme.Entity.PasswordResetToken;
-import com.teachme.teachme.Entity.RegistrationToken;
-import com.teachme.teachme.Repository.UserDao;
+import com.teachme.teachme.dto.NewPasswordDTO;
+import com.teachme.teachme.entity.DAOUser;
+import com.teachme.teachme.entity.PasswordResetToken;
+import com.teachme.teachme.repository.UserDao;
 import com.teachme.teachme.Service.UserService;
-import com.teachme.teachme.event.OnRegistrationEvent;
 import com.teachme.teachme.event.PasswordResetEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
