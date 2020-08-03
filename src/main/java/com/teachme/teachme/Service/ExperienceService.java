@@ -1,6 +1,8 @@
 package com.teachme.teachme.service;
 
 import com.teachme.teachme.DTO.ExperienceDTO;
+import com.teachme.teachme.DTO.ExperienceUpdateDTO;
+import com.teachme.teachme.DTO.SkillWrapper;
 import com.teachme.teachme.entity.DAOUser;
 import com.teachme.teachme.entity.Experience;
 import com.teachme.teachme.entity.Skill;
@@ -9,6 +11,7 @@ import com.teachme.teachme.repository.ExperienceRepository;
 import com.teachme.teachme.repository.SkillRepository;
 import com.teachme.teachme.repository.UserDao;
 import com.teachme.teachme.security.SecurityUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +20,7 @@ import java.util.*;
 
 @Service
 @Transactional
+@Slf4j
 public class ExperienceService {
 
     private UserDao userRepository;
@@ -56,32 +60,21 @@ public class ExperienceService {
         experience.setEnddate(experienceDTO.getEnddate());
         experience.setCurrently_working(experienceDTO.getCurrently_working());
         experience.setUser(user);
-        /*
-        Set<Skill> skillSet = new HashSet<>();
-        //get Skill using skillId and set them to Experience object
-        for(int skill: experienceDTO.getSkillIdList())
+
+        experienceRepository.save(experience);
+
+        //get Skill using skillId and set them to Course object
+        for(long skill: experienceDTO.getSkillIdList())
         {
-            Optional<Skill> SkillbyId = skillRepository.findById(skill);
-            if(SkillbyId.isPresent())
+            Optional<Skill> skillOptional = skillRepository.findById(skill);
+
+            if(skillOptional.isPresent())
             {
-                skillSet.add(SkillbyId.get());
+                Skill skillToUpdate = skillOptional.get();
+                skillToUpdate.addExperience(experience);
             }
         }
 
-
-        //set these skills to experience
-        experience.setSkills(skillSet);
-
-
-        //get all experiences and now save this experience to list
-        Set<Experience> userExperiences = user.getExperiences();
-        userExperiences.add(experience);
-
-
-
-        user.setExperiences(userExperiences);
-        userRepository.save(user);
-        */
         //now send a message body as response
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("message","Experience Added");
@@ -153,5 +146,122 @@ public class ExperienceService {
          */
         //if not found then raise exception
         throw new CustomException("Experience Not Found", HttpStatus.NOT_FOUND,"/experience");
+    }
+
+    public Map<String, Object> addSkillsToExperience(long id,SkillWrapper skillWrapper) {
+        log.info("In addSkillsToExperience Service");
+
+        String currentUsername = SecurityUtils.getCurrentUsername().get();
+        DAOUser user = userRepository.findByEmail(currentUsername);
+
+        Optional<Experience> experience = experienceRepository.findByIdAndUserId(user.getId(),id);
+
+        if(experience.isEmpty())
+        {
+            throw new CustomException("Experience Not Found",HttpStatus.NOT_FOUND,"/");
+        }
+
+
+        for (long skillId: skillWrapper.getSkillIdList())
+        {
+            Optional<Skill> skillOptional = skillRepository.findById(skillId);
+            if(skillOptional.isPresent())
+            {
+                //skillList.remove(skillOptional.get());
+                //saving this experience to skill also
+                skillOptional.get().addExperience(experience.get());
+            }
+        }
+
+        log.info("Completed addSkillsToExperience");
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("message","Skills Added");
+        body.put("status",200);
+        body.put("path","/");
+        return body;
+    }
+
+    public Object removeSkillsToExperience(long id, SkillWrapper skillWrapper) {
+        log.info("In removeSkillsToExperience Service");
+
+        String currentUsername = SecurityUtils.getCurrentUsername().get();
+        DAOUser user = userRepository.findByEmail(currentUsername);
+
+        Optional<Experience> experience = experienceRepository.findByIdAndUserId(user.getId(),id);
+
+        if(experience.isEmpty())
+        {
+            throw new CustomException("Experience Not Found",HttpStatus.NOT_FOUND,"/");
+        }
+
+        Set<Skill> skillList = user.getSkills();
+
+        for (long skillId: skillWrapper.getSkillIdList())
+        {
+            Optional<Skill> skillOptional = skillRepository.findById(skillId);
+            if(skillOptional.isPresent())
+            {
+                //get experiences of this skill and remove current experience from it
+                //skillOptional.get().getExperienceSet().remove(experience.get());
+                skillOptional.get().removeExperience(experience.get());
+            }
+        }
+
+        log.info("Completed removeSkillsToExperience");
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("message","Skills Removed");
+        body.put("status",200);
+        body.put("path","/");
+        return body;
+
+    }
+
+    public Map<String, Object> updateExperience(long id, ExperienceUpdateDTO experienceDTO) {
+        log.info("In updateExperience Service");
+
+        String currentUsername = SecurityUtils.getCurrentUsername().get();
+        DAOUser user = userRepository.findByEmail(currentUsername);
+
+
+        Optional<Experience> experience = experienceRepository.findByIdAndUserId(user.getId(), id);
+        if(experience.isEmpty())
+        {
+            log.warn("Experience Not Found");
+            throw new CustomException("Experience Not Found",HttpStatus.NOT_FOUND,"/");
+        }
+
+        Experience experienceObject = experience.get();
+
+        log.info("Updating Experience Id: ",experienceObject.getId());
+
+        if(experienceDTO.getName() != null)
+            experienceObject.setName(experienceDTO.getName());
+
+
+        if(experienceDTO.getDescription() != null)
+            experienceObject.setDescription(experienceDTO.getDescription());
+
+        if(experienceDTO.getCurrently_working() != null)
+            experienceObject.setCurrently_working(experienceDTO.getCurrently_working());
+
+        if(experienceDTO.getStartdate() != null)
+            experienceObject.setStartdate(experienceDTO.getStartdate());
+
+        if(experienceDTO.getEnddate() != null)
+            experienceObject.setEnddate(experienceDTO.getEnddate());
+
+        //Get Skills To Update In Other Request
+        experienceRepository.save(experienceObject);
+        log.info("Experience Details Updated");
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("message","Experience Details Updated");
+        body.put("status",200);
+        body.put("path","/");
+
+        log.info("Exiting updateExperience Service");
+
+        return body;
     }
 }

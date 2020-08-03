@@ -36,6 +36,11 @@ public class SkillRepositoryImpl implements SkillRepositoryCustom{
                     user.getSkills().remove(skill);
                 });
 
+                //remove reference from Course
+                skill.getCourseSet().forEach(course -> {
+                    course.getSkills().remove(skill);
+                });
+
                 // Now remove the skill
                 entityManager.remove(skill);
 

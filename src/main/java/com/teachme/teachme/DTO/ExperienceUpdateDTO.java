@@ -14,14 +14,10 @@ import java.util.List;
 @Getter
 @Setter
 
-public class ExperienceDTO {
-    @NotBlank(message = "Name can not be empty")
+public class ExperienceUpdateDTO {
     @Size(min = 6, max = 30, message = "Name must be between 6 and 30 characters")
-    @Column
     private String name;
 
-    @NotBlank(message = "Description can not be empty")
-    @Column
     private String description;
 
     @Past(message = "Date Must Be From Past")
@@ -33,8 +29,5 @@ public class ExperienceDTO {
     private Date enddate;
 
     private Boolean currently_working;
-
-    private List<Integer> skillIdList;
-
 
 }

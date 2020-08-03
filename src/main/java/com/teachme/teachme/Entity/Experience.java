@@ -57,7 +57,7 @@ public class Experience {
             name = "EXPERIENCE_SKILL",
             joinColumns = {@JoinColumn(name = "EXPERIENCE_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "SKILL_ID", referencedColumnName = "ID")})
-    private Set<Skill> skills;
+    private Set<Skill> skills = new HashSet<>();
 
 
 

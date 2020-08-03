@@ -2,8 +2,10 @@ package com.teachme.teachme.controller;
 
 import com.teachme.teachme.DTO.UserDTO;
 import com.teachme.teachme.jwt.JwtTokenUtil;
+
 import com.teachme.teachme.security.JwtRequest;
 import com.teachme.teachme.security.JwtResponse;
+
 import com.teachme.teachme.security.JwtUserDetailsService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -44,7 +46,6 @@ public class AuthenticationController {
     @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
-        System.out.println("Here");
         Authentication authentication = authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
 
         SecurityContextHolder.getContext().setAuthentication(authentication);

@@ -19,7 +19,7 @@ public interface SkillRepository extends JpaRepository< Skill, Integer > ,SkillR
 
     Optional<Skill> findByName( String name );
 
-    Optional<Skill> findById(int id);
+    Optional<Skill> findById(long id);
     /*
     @Query("SELECT s.verificationstatus FROM Skill s where s.skill_id = :id")
     boolean findVerificationstatusById( int id );

@@ -51,7 +51,7 @@ public class SkillService {
         return new ResponseEntity<Skill>( skillOptional.get(), HttpStatus.OK );
     }
 
-    /*
+
     public Map<String, Object> addSkill(SkillDTO skillDTO){
 
         Optional<Skill> skillOptional = skillRepository.findByName( skillDTO.getName() );
@@ -152,7 +152,7 @@ public class SkillService {
     }
 
 
-     */
+
 
     public Map<String, Object> deleteSkill(long skill_id) {
         //delete this skill from database and remove this skill from all associated projects
