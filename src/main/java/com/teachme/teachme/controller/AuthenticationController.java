@@ -1,5 +1,6 @@
 package com.teachme.teachme.controller;
 
+import com.teachme.teachme.Service.OnRegistrationService;
 import com.teachme.teachme.dto.UserDTO;
 import com.teachme.teachme.entity.DAOUser;
 import com.teachme.teachme.entity.RegistrationToken;
@@ -53,9 +54,12 @@ public class AuthenticationController {
 
     private PasswordEncoder bcryptEncoder;
 
+    private OnRegistrationService onRegistrationService;
+
     public AuthenticationController(AuthenticationManager authenticationManager,JwtTokenUtil jwtTokenUtil,
                                     JwtUserDetailsService userDetailsService, ApplicationEventPublisher applicationEventPublisher,
-                                    UserService userService, MessageSource messageSource, PasswordEncoder passwordEncoder ) {
+                                    UserService userService, MessageSource messageSource, PasswordEncoder passwordEncoder,
+                                    OnRegistrationService onRegistrationService ) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenUtil = jwtTokenUtil;
         this.userDetailsService = userDetailsService;
@@ -63,6 +67,7 @@ public class AuthenticationController {
         this.userService = userService;
         this.messageSource = messageSource;
         this.bcryptEncoder = passwordEncoder;
+        this.onRegistrationService = onRegistrationService;
     }
 
     @PostMapping("/authenticate")
@@ -100,7 +105,7 @@ public class AuthenticationController {
     public ResponseEntity<?> confirmuserforregistration( WebRequest request, Model model, @RequestParam( "token" ) String token ){
 
         Locale locale = request.getLocale();
-        RegistrationToken registrationToken = userService.getregistrationtoken( token );
+        RegistrationToken registrationToken = onRegistrationService.getregistrationtoken( token );
 
         if( registrationToken == null ){
 
@@ -118,6 +123,7 @@ public class AuthenticationController {
         }
 
         DAOUser user = registrationToken.getUser();
+        onRegistrationService.deleteregistrationtoken( registrationToken );
         userService.enableuser( user );
         return new ResponseEntity<>( "redirect:/authenticate.html?lang=" + request.getLocale().getLanguage() , HttpStatus.OK );
     }
@@ -125,7 +131,9 @@ public class AuthenticationController {
     private Authentication authenticate(String email, String password) throws Exception {
         try {
 
+            System.out.println( "heree" );
             Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+            System.out.println( "heyyy" );
             return authenticate;
         } catch (BadCredentialsException e) {
             throw new Exception("INVALID_CREDENTIALS", e);

@@ -37,6 +37,9 @@ public class Skill {
     @ManyToMany(mappedBy = "skills",cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<DAOUser> daoUserSet = new HashSet<>();
 
+    @ManyToMany( mappedBy = "skills", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER )
+    private Set<Request> requestSet = new HashSet<>();
+
 
     public Skill(){ }
 

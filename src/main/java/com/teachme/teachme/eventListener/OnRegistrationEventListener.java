@@ -1,5 +1,6 @@
 package com.teachme.teachme.eventListener;
 
+import com.teachme.teachme.Service.OnRegistrationService;
 import com.teachme.teachme.entity.DAOUser;
 import com.teachme.teachme.Mail;
 import com.teachme.teachme.Service.UserService;
@@ -15,7 +16,7 @@ import java.util.UUID;
 public class OnRegistrationEventListener implements ApplicationListener<OnRegistrationEvent> {
 
 
-    private UserService userService;
+    //private UserService userService;
 
     private MessageSource messageSource;
 
@@ -23,12 +24,14 @@ public class OnRegistrationEventListener implements ApplicationListener<OnRegist
 
     private Mail mail;
 
+    private OnRegistrationService onRegistrationService;
 
-    public OnRegistrationEventListener( UserService userService, MessageSource messageSource, Mail mail ){
 
-        this.userService = userService;
+    public OnRegistrationEventListener( MessageSource messageSource, Mail mail, OnRegistrationService onRegistrationService ){
+
         this.messageSource = messageSource;
         this.mail = mail;
+        this.onRegistrationService = onRegistrationService;
     }
 
     @Override
@@ -41,7 +44,7 @@ public class OnRegistrationEventListener implements ApplicationListener<OnRegist
 
         DAOUser user = onRegistrationEvent.getUser();
         String token = UUID.randomUUID().toString();
-        userService.createregistrationtoken( user, token );
+        onRegistrationService.createregistrationtoken( user, token );
 
         String confirmationurl = onRegistrationEvent.getAppurl() + "/registrationconfirmation.html?token=" + token;
         //String message = messageSource.getMessage("message.regSucc", null, onRegistrationEvent.getLocale());

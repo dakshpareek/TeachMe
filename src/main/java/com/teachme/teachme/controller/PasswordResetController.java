@@ -1,5 +1,6 @@
 package com.teachme.teachme.controller;
 
+import com.teachme.teachme.Service.PasswordResetService;
 import com.teachme.teachme.dto.NewPasswordDTO;
 import com.teachme.teachme.entity.DAOUser;
 import com.teachme.teachme.entity.PasswordResetToken;
@@ -30,13 +31,16 @@ public class PasswordResetController {
 
     private MessageSource messageSource;
 
+    private PasswordResetService passwordResetService;
+
     public PasswordResetController( UserDao userrepository, ApplicationEventPublisher applicationEventPublisher,
-                                    UserService userService, MessageSource messageSource ){
+                                    UserService userService, MessageSource messageSource, PasswordResetService passwordResetService ){
 
         this.userrepository = userrepository;
         this.applicationEventPublisher = applicationEventPublisher;
         this.userService = userService;
         this.messageSource = messageSource;
+        this.passwordResetService = passwordResetService;
     }
 
     @PostMapping( "/ResetPassword" )
@@ -50,6 +54,7 @@ public class PasswordResetController {
         }
 
         try {
+
             DAOUser user = userOptional.get();
             String appurl = request.getContextPath();
             applicationEventPublisher.publishEvent( new PasswordResetEvent( appurl, request.getLocale(), user ));
@@ -66,7 +71,7 @@ public class PasswordResetController {
     public ResponseEntity<?> confirmuserforpasswordreset(WebRequest request, Model model, @RequestParam( "token" ) String token ){
 
         Locale locale = request.getLocale();
-        PasswordResetToken passwordResetToken = userService.getpasswordresettoken( token );
+        PasswordResetToken passwordResetToken = passwordResetService.getpasswordresettoken( token );
 
         if( passwordResetToken == null ){
 
@@ -91,7 +96,7 @@ public class PasswordResetController {
                                             @RequestBody NewPasswordDTO newPasswordDTO ){
 
         Locale locale = request.getLocale();
-        PasswordResetToken passwordResetToken = userService.getpasswordresettoken( token );
+        PasswordResetToken passwordResetToken = passwordResetService.getpasswordresettoken( token );
 
         if( passwordResetToken == null ){
 
@@ -109,7 +114,9 @@ public class PasswordResetController {
         }
 
         DAOUser user = passwordResetToken.getUser();
+        passwordResetService.deletepasswordresettoken( passwordResetToken );
         userService.changepassword( user, newPasswordDTO );
         return new ResponseEntity<>( "Password changed successfully" , HttpStatus.OK );
     }
+
 }

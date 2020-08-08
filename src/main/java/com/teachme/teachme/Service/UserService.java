@@ -24,19 +24,12 @@ public class UserService {
     //@Autowired
     private UserDao userRepository;
 
-    private RegistrationTokenRepository registrationTokenRepository;
-
-    private PasswordResetTokenRepository passwordResetTokenRepository;
-
     private PasswordEncoder bcryptEncoder;
 
-    public UserService(UserDao userRepository, RegistrationTokenRepository registrationTokenRepository,
-                       PasswordResetTokenRepository passwordResetTokenRepository, PasswordEncoder passwordEncoder ) {
-        this.userRepository = userRepository;
-        this.registrationTokenRepository = registrationTokenRepository;
-        this.passwordResetTokenRepository = passwordResetTokenRepository;
-        this.bcryptEncoder = passwordEncoder;
+    public UserService(UserDao userRepository, PasswordEncoder passwordEncoder ) {
 
+        this.userRepository = userRepository;
+        this.bcryptEncoder = passwordEncoder;
     }
 
 
@@ -86,24 +79,6 @@ public class UserService {
         SecurityContextHolder.clearContext();
     }
 
-    public void createregistrationtoken( DAOUser user, String token ){
-
-        RegistrationToken registrationToken = new RegistrationToken( token, user );
-        registrationTokenRepository.save( registrationToken );
-    }
-
-    public RegistrationToken getregistrationtoken( String token ){
-
-        RegistrationToken registrationToken = registrationTokenRepository.findByToken( token );
-
-        if( registrationToken == null ){
-
-            return null;
-        }
-
-        return registrationToken;
-    }
-
 
     public void enableuser( DAOUser user ){
 
@@ -111,27 +86,9 @@ public class UserService {
         userRepository.save( user );
     }
 
-    public void createpasswordresettoken( DAOUser user, String token ){
-
-        PasswordResetToken passwordResetToken = new PasswordResetToken(token, user);
-        passwordResetTokenRepository.save( passwordResetToken );
-    }
-
-    public PasswordResetToken getpasswordresettoken( String token ){
-
-        PasswordResetToken passwordResetToken = passwordResetTokenRepository.findByToken( token );
-
-        if( passwordResetToken == null ){
-
-            return null;
-        }
-
-        return passwordResetToken;
-    }
-
     public void changepassword(DAOUser user, NewPasswordDTO newPasswordDTO ){
 
-        user.setPassword( bcryptEncoder.encode( newPasswordDTO.getNewpassword() ) );
+        user.setPassword( bcryptEncoder.encode( newPasswordDTO.getPassword() ) );
         userRepository.save( user );
     }
 

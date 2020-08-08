@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 
-public class ExperienceDTO {
+public class ExperienceUpdateDTO {
     @NotBlank(message = "Name can not be empty")
     @Size(min = 6, max = 30, message = "Name must be between 6 and 30 characters")
     @Column

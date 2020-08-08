@@ -18,6 +18,10 @@ public class SkillService {
     private UserDao userRepository;
     private AuthorityRepository authorityRepository;
 
+    public SkillService(){
+
+    }
+
     public SkillService(SkillRepository skillRepository,
                         UserDao userRepository,AuthorityRepository authorityRepository) {
         this.skillRepository = skillRepository;

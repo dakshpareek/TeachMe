@@ -59,6 +59,4 @@ public class Experience {
             inverseJoinColumns = {@JoinColumn(name = "SKILL_ID", referencedColumnName = "ID")})
     private Set<Skill> skills;
 
-
-
 }

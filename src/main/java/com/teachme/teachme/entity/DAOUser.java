@@ -80,4 +80,9 @@ public class DAOUser {
             mappedBy = "user")
     private PasswordResetToken passwordResetToken;
 
+    @OneToOne( fetch = FetchType.LAZY,
+                cascade = CascadeType.ALL,
+                mappedBy = "user" )
+    private RequestResponse requestResponse;
+
 }

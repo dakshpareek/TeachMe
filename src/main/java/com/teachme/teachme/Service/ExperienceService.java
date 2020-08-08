@@ -32,7 +32,8 @@ public class ExperienceService {
     public List<Experience> getAllExperience() {
         //get user
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        Optional<DAOUser> daoUserOptional = userRepository.findByEmail(currentUsername);
+        DAOUser user = daoUserOptional.get();
 
         List<Experience> experiences = experienceRepository.findAllByUserId(user.getId());
 
@@ -43,7 +44,9 @@ public class ExperienceService {
     public Map<String, Object> createExperience(ExperienceDTO experienceDTO) {
         //get user
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+
+        Optional<DAOUser> daoUserOptional = userRepository.findByEmail(currentUsername);
+        DAOUser user = daoUserOptional.get();
 
         //create new experience
         Experience experience = new Experience();
@@ -92,7 +95,9 @@ public class ExperienceService {
     public Experience getExperience(long id) {
         //get user
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+
+        Optional<DAOUser> daoUserOptional = userRepository.findByEmail(currentUsername);
+        DAOUser user = daoUserOptional.get();
 
         Optional<Experience> experienceOptional = experienceRepository.findByIdAndUserId(id,user.getId());
         if(experienceOptional.isPresent())
@@ -117,7 +122,10 @@ public class ExperienceService {
     public Object deleteExperience(long id) {
         //get user
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+
+        Optional<DAOUser> daoUserOptional = userRepository.findByEmail(currentUsername);
+        DAOUser user = daoUserOptional.get();
+
         Optional<Experience> experienceOptional = experienceRepository.findByIdAndUserId(id,user.getId());
         if(experienceOptional.isPresent())
         {

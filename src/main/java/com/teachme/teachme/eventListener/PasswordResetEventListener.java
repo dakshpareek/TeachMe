@@ -1,5 +1,6 @@
 package com.teachme.teachme.eventListener;
 
+import com.teachme.teachme.Service.PasswordResetService;
 import com.teachme.teachme.entity.DAOUser;
 import com.teachme.teachme.Mail;
 import com.teachme.teachme.Service.UserService;
@@ -25,19 +26,24 @@ public class PasswordResetEventListener implements ApplicationListener<PasswordR
     @Autowired
     private JavaMailSender mailSender;
     */
+
     @Autowired
     private Mail mail;
 
     @Autowired
+    private PasswordResetService passwordResetService;
+
+    @Autowired
     public PasswordResetEventListener(){}
 
+
     /*
-    public PasswordResetEventListener(UserService userService, MessageSource messageSource, JavaMailSender javaMailSender, Mail mail ){
+    public PasswordResetEventListener(UserService userService, MessageSource messageSource, Mail mail, PasswordResetService passwordResetService ){
 
         this.userService = userService;
         this.messageSource = messageSource;
-        this.mailSender = javaMailSender;
         this.mail = mail;
+        this.passwordResetService = passwordResetService;
     }*/
 
     @Override
@@ -50,8 +56,7 @@ public class PasswordResetEventListener implements ApplicationListener<PasswordR
 
         DAOUser user = passwordResetEvent.getUser();
         String token = UUID.randomUUID().toString();
-        userService.createpasswordresettoken( user, token );
-
+        passwordResetService.createpasswordresettoken( user, token );
         String confirmationurl = passwordResetEvent.getAppurl() + "/PasswordResetConfirmation.html?token=" + token;
         //String message = messageSource.getMessage("message.regSucc", null, passwordResetEvent.getLocale());
         String message = "Message Heree";
@@ -61,4 +66,5 @@ public class PasswordResetEventListener implements ApplicationListener<PasswordR
 
         //mailSender.send( email );
     }
+
 }
