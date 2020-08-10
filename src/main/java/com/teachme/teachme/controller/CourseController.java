@@ -2,6 +2,7 @@ package com.teachme.teachme.controller;
 
 import com.teachme.teachme.dto.CourseDTO;
 import com.teachme.teachme.dto.CourseUpdateDTO;
+import com.teachme.teachme.dto.SkillWrapper;
 import com.teachme.teachme.service.CourseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

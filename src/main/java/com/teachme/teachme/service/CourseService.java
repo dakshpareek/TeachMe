@@ -2,7 +2,7 @@ package com.teachme.teachme.service;
 
 import com.teachme.teachme.dto.CourseDTO;
 import com.teachme.teachme.dto.CourseUpdateDTO;
-import com.teachme.teachme.DTO.SkillWrapper;
+import com.teachme.teachme.dto.SkillWrapper;
 import com.teachme.teachme.entity.Course;
 import com.teachme.teachme.entity.DAOUser;
 import com.teachme.teachme.entity.Skill;
@@ -38,7 +38,7 @@ public class CourseService {
         //get user
         log.info("In getAllCourses service");
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
 
         List<Course> courses = courseRepository.findAllByUserId(user.getId());
 
@@ -50,7 +50,7 @@ public class CourseService {
         log.info("In createCourse service");
         //get user
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
 
         //create new experience
         Course course = new Course();
@@ -95,7 +95,7 @@ public class CourseService {
         log.info("In getCourses service");
         //get user
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
 
         Optional<Course> courseOptional = courseRepository.findByIdAndUserId(id,user.getId());
         if(courseOptional.isPresent())
@@ -112,7 +112,7 @@ public class CourseService {
         log.info("In getCourses service");
         //get user
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
 
         Optional<Course> courseOptional = courseRepository.findByIdAndUserId(id,user.getId());
 
@@ -138,7 +138,7 @@ public class CourseService {
         log.info("In updateCourses Service");
 
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
 
 
         Optional<Course> courseOptional = courseRepository.findByIdAndUserId(user.getId(), id);
@@ -209,7 +209,7 @@ public class CourseService {
         log.info("In addSkillsToCourse Service");
 
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
 
         Optional<Course> course = courseRepository.findByIdAndUserId(user.getId(),id);
 
@@ -240,7 +240,7 @@ public class CourseService {
         log.info("In removeSkillsToCourse Service");
 
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
 
         Optional<Course> course = courseRepository.findByIdAndUserId(user.getId(),id);
 
@@ -273,7 +273,7 @@ public class CourseService {
         log.info("In changeStatus service");
 
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
 
         Optional<Course> course = courseRepository.findByIdAndUserId(user.getId(),id);
 
@@ -289,4 +289,5 @@ public class CourseService {
 
         return course.get();
     }
+
 }
