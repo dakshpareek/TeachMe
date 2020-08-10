@@ -1,7 +1,7 @@
 package com.teachme.teachme.service;
 
 import com.teachme.teachme.entity.Authority;
-import com.teachme.teachme.DTO.AuthorityDTO;
+import com.teachme.teachme.dto.AuthorityDTO;
 import com.teachme.teachme.entity.DAOUser;
 import com.teachme.teachme.exceptionhandler.CustomException;
 import com.teachme.teachme.repository.AuthorityRepository;

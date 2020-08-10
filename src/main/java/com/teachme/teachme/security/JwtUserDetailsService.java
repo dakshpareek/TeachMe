@@ -2,7 +2,7 @@ package com.teachme.teachme.security;
 
 
 import com.teachme.teachme.entity.DAOUser;
-import com.teachme.teachme.DTO.UserDTO;
+import com.teachme.teachme.dto.UserDTO;
 import com.teachme.teachme.exceptionhandler.CustomException;
 import com.teachme.teachme.repository.UserDao;
 import org.springframework.http.HttpStatus;
@@ -66,7 +66,7 @@ public class JwtUserDetailsService implements UserDetailsService {
         DAOUser newUser = new DAOUser();
         newUser.setName(user.getName());
         newUser.setEmail(user.getEmail());
-        newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
+        newUser.setPassword( bcryptEncoder.encode( user.getPassword() ) );
         userDao.save(newUser);
         return newUser;
         //return save;

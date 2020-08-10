@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserDao extends JpaRepository<DAOUser, Integer> ,UserDaoRepositoryCustom{
-    DAOUser findByEmail(String username);
+public interface UserDao extends JpaRepository<DAOUser, Integer> , com.teachme.teachme.repository.UserDaoRepositoryCustom {
+    //DAOUser findByEmail(String username);
 
     //@EntityGraph(attributePaths = "authorities")
     //Optional<DAOUser> findOneWithAuthoritiesByUsername(String username);
@@ -22,4 +22,6 @@ public interface UserDao extends JpaRepository<DAOUser, Integer> ,UserDaoReposit
     boolean existsByEmail(String email);
 
     void deleteByEmail(String email);
+
+    Optional<DAOUser> findByEmail( String email );
 }

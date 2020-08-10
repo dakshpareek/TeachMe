@@ -4,14 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
-import com.teachme.teachme.entity.Skill;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -70,5 +67,32 @@ public class DAOUser {
             joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "SKILL_ID", referencedColumnName = "ID")})
     private Set<Skill> skills = new HashSet<>();
+
+    private boolean enabled;
+
+    @OneToOne( fetch = FetchType.LAZY,
+                cascade = CascadeType.ALL,
+                mappedBy = "user")
+    private RegistrationToken registrationToken;
+
+    @OneToOne( fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "user")
+    private PasswordResetToken passwordResetToken;
+
+    @OneToOne( fetch = FetchType.LAZY,
+                cascade = CascadeType.ALL,
+                mappedBy = "user" )
+    private RequestResponse requestResponse;
+
+    @OneToOne( fetch = FetchType.LAZY,
+                cascade = CascadeType.ALL,
+                mappedBy = "student" )
+    private RequestContract requestContract;
+
+    @OneToOne( fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "teacher" )
+    private RequestContract requestContract1;
 
 }
