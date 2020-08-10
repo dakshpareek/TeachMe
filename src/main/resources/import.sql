@@ -48,3 +48,7 @@ INSERT INTO COURSE_SKILL(COURSE_ID,SKILL_ID) VALUES (3,3);
 INSERT INTO COURSE_RESPONSES(ID,MESSAGE,proposed_Price,status,USER,course) VALUES (101,"Please Teach Me This",40.99,0,2,2);
 INSERT INTO COURSE_RESPONSES(ID,MESSAGE,proposed_Price,status,USER,course) VALUES (102,"Teach Me This",40.99,0,2,3);
 INSERT INTO COURSE_RESPONSES(ID,MESSAGE,proposed_Price,status,USER,course) VALUES (103,"Help Me With This Course",10.99,0,3,1);
+
+
+INSERT INTO CONTRACT_LOGS(ID,log_Message,created_Date,end_Date,lecture_Duration,is_verified,update_requested) VALUES (1,"This Log","2020-02-12 02:30:00","2020-02-12 03:20:00",50,0,0);
+INSERT INTO CONTRACT_LOGS(ID,log_Message,created_Date,end_Date,lecture_Duration,is_verified,update_requested) VALUES (2,"This 2nd Log","2019-02-12 02:30:00","2019-02-12 03:20:00",50,0,0);
