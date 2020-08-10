@@ -13,7 +13,7 @@ import java.util.Date;
 public class PasswordResetToken {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String token;

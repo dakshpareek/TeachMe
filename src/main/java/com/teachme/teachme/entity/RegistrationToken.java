@@ -14,7 +14,7 @@ import java.util.Calendar;
 public class RegistrationToken {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String token;
