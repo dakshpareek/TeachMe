@@ -48,34 +48,18 @@ public class AuthenticationController {
     //@Autowired
     private JwtUserDetailsService userDetailsService;
 
-    private ApplicationEventPublisher applicationEventPublisher;
-
-    private UserService userService;
-
-    private MessageSource messageSource;
-
-    private PasswordEncoder bcryptEncoder;
-
-    private OnRegistrationService onRegistrationService;
-
     public AuthenticationController(AuthenticationManager authenticationManager,JwtTokenUtil jwtTokenUtil,
-                                    JwtUserDetailsService userDetailsService, ApplicationEventPublisher applicationEventPublisher,
-                                    UserService userService, MessageSource messageSource, PasswordEncoder passwordEncoder,
-                                    OnRegistrationService onRegistrationService ) {
+                                    JwtUserDetailsService userDetailsService) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenUtil = jwtTokenUtil;
         this.userDetailsService = userDetailsService;
-        this.applicationEventPublisher = applicationEventPublisher;
-        this.userService = userService;
-        this.messageSource = messageSource;
-        this.bcryptEncoder = passwordEncoder;
-        this.onRegistrationService = onRegistrationService;
+
     }
 
     @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
-        Authentication authentication = authenticate(authenticationRequest.getEmail(), bcryptEncoder.encode( authenticationRequest.getPassword() ) );
+        Authentication authentication = authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -88,55 +72,13 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> saveUser(@Valid @RequestBody UserDTO user, HttpServletRequest request ){
-
-        try {
-            DAOUser registereduser = userDetailsService.save(user);
-            String appurl = request.getContextPath();
-            applicationEventPublisher.publishEvent( new OnRegistrationEvent( appurl, request.getLocale(), registereduser ));
-        }
-        catch ( RuntimeException ex ){
-
-            System.out.println( ex );
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR );
-        }
-
-        return new ResponseEntity<>("Check your email for verification", HttpStatus.OK );
+    public ResponseEntity<?> saveUser(@Valid @RequestBody UserDTO user){
+        return ResponseEntity.ok(userDetailsService.save(user));
     }
 
-    @GetMapping( "/registrationconfirmation" )
-    public ResponseEntity<?> confirmuserforregistration( WebRequest request, Model model, @RequestParam( "token" ) String token ){
-
-        Locale locale = request.getLocale();
-        RegistrationToken registrationToken = onRegistrationService.getregistrationtoken( token );
-
-        if( registrationToken == null ){
-
-            String message = messageSource.getMessage("auth.message.invalidToken", null, locale);
-            model.addAttribute("message", message);
-            return new ResponseEntity<>( "redirect:/badUser.html?lang=" + locale.getLanguage(), HttpStatus.BAD_REQUEST );
-        }
-
-        Calendar calendar = Calendar.getInstance();
-
-        if (( registrationToken.getExpiryDate().getTime() - calendar.getTime().getTime()) <= 0) {
-            String messageValue = messageSource.getMessage("auth.message.expired", null, locale);
-            model.addAttribute("message", messageValue);
-            return new ResponseEntity<>( "redirect:/badUser.html?lang=" + locale.getLanguage(), HttpStatus.BAD_REQUEST );
-        }
-
-        DAOUser user = registrationToken.getUser();
-        onRegistrationService.deleteregistrationtoken( registrationToken );
-        userService.enableuser( user );
-        return new ResponseEntity<>( "redirect:/authenticate.html?lang=" + request.getLocale().getLanguage() , HttpStatus.OK );
-    }
-
-    private Authentication authenticate(String email, String password) throws Exception {
+    private Authentication authenticate(String username, String password) throws Exception {
         try {
-
-            System.out.println( "heree" );
-            Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-            System.out.println( "heyyy" );
+            Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             return authenticate;
         } catch (BadCredentialsException e) {
             throw new Exception("INVALID_CREDENTIALS", e);
