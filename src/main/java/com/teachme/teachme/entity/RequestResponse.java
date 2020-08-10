@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
 public class RequestResponse {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
 
     @ManyToOne( fetch = FetchType.EAGER, optional = false)

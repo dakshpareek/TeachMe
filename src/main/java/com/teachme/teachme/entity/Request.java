@@ -24,7 +24,7 @@ import java.util.Set;
 public class Request {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotBlank( message = "Title cannot be blank")
@@ -66,5 +66,10 @@ public class Request {
                 cascade = CascadeType.ALL,
                 mappedBy = "request")
     private Set<RequestResponse> requestResponseSet = new HashSet<>();
+
+    @OneToOne( fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "request" )
+    private RequestContract requestContract;
 
 }
