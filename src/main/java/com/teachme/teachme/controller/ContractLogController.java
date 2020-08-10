@@ -1,6 +1,6 @@
 package com.teachme.teachme.controller;
 
-import com.teachme.teachme.DTO.ContractLogDTO;
+import com.teachme.teachme.dto.ContractLogDTO;
 import com.teachme.teachme.service.ContractLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

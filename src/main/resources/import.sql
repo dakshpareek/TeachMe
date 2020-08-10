@@ -1,7 +1,7 @@
 # noinspection SqlNoDataSourceInspectionForFile
-INSERT INTO USERS (ID, NAME, PASSWORD, Email) VALUES (1, 'admin', '$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi','admin@localhost');
-INSERT INTO USERS (ID, NAME, PASSWORD, Email) VALUES (2, 'user', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','user@localhost');
-INSERT INTO USERS (ID, NAME, PASSWORD, Email) VALUES (3, 'user2', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','user2@localhost');
+INSERT INTO USERS (ID, NAME, PASSWORD, Email,enabled) VALUES (1, 'admin', '$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi','admin@localhost',true);
+INSERT INTO USERS (ID, NAME, PASSWORD, Email,enabled) VALUES (2, 'user', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','user@localhost',true);
+INSERT INTO USERS (ID, NAME, PASSWORD, Email,enabled) VALUES (3, 'user2', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','user2@localhost',true);
 
 INSERT INTO AUTHORITY (NAME) VALUES ('ROLE_STUDENT');
 INSERT INTO AUTHORITY (NAME) VALUES ('ROLE_TEACHER');

@@ -1,6 +1,6 @@
 package com.teachme.teachme.service;
 
-import com.teachme.teachme.DTO.ContractLogDTO;
+import com.teachme.teachme.dto.ContractLogDTO;
 import com.teachme.teachme.entity.ContractLogs;
 import com.teachme.teachme.entity.DAOUser;
 import com.teachme.teachme.repository.ContractLogRepository;
@@ -36,7 +36,7 @@ public class ContractLogService {
 
         //get user
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
 
         //check this contract exists and it belongs to this user (check for both end)
 
@@ -74,7 +74,7 @@ public class ContractLogService {
 
         //get user
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
 
         //Here we will check whether this user owns this log or not
 
@@ -100,7 +100,7 @@ public class ContractLogService {
 
         //get user
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
 
         //Here we will check whether this user belongs to this contract or not (this user is not owner of contract)
 
@@ -126,7 +126,7 @@ public class ContractLogService {
 
         //get user
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
 
         //get all logs of this contract if this belongs to user
 
@@ -154,7 +154,7 @@ public class ContractLogService {
 
         //get user
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
 
         //get all logs of this contract if this belongs to user
 
@@ -176,7 +176,7 @@ public class ContractLogService {
 
         //get user
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
 
         //get all logs of this contract if this belongs to user
 
@@ -214,7 +214,7 @@ public class ContractLogService {
 
         //get user
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
 
         //get this log of this contract if this belongs to this user(owner)
 

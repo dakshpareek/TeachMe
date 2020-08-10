@@ -38,7 +38,7 @@ public class CourseResponseService {
         //get user
         log.info("In getAllResponses service");
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
 
         List<CourseResponse> responseList = courseResponseRepository.findAllByUserId(user.getId());
 
@@ -51,7 +51,7 @@ public class CourseResponseService {
         log.info("In getResponses service");
         //get user
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
 
         Optional<CourseResponse> courseOptional = courseResponseRepository.findByIdAndUserId(id,user.getId());
 
@@ -70,7 +70,7 @@ public class CourseResponseService {
         log.info("In deleteResponse service");
         //get user
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
 
         Optional<CourseResponse> optionalCourseResponse = courseResponseRepository.findByIdAndUserId(id, user.getId());
 
@@ -96,7 +96,7 @@ public class CourseResponseService {
         log.info("In createResponse service");
         //get user
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
 
         //check if course exists or not
         Optional<Course> course = courseRepository.findById(id);
@@ -132,7 +132,7 @@ public class CourseResponseService {
         log.info("In changeStatus service");
 
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
 
         //check if this course belongs to this user then only he can change status of response id
         Optional<Course> course = courseRepository.findByIdAndUserId(id,user.getId());
@@ -161,7 +161,7 @@ public class CourseResponseService {
         log.info("In getResponsesOnCourse service");
 
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
 
         //check if this course belongs to this user
         Optional<Course> course = courseRepository.findByIdAndUserId(id, user.getId());
@@ -191,7 +191,7 @@ public class CourseResponseService {
         log.info("In getResponseOnCourseById service");
 
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
 
         //check if this course belongs to this user
         Optional<Course> course = courseRepository.findByIdAndUserId(id,user.getId());

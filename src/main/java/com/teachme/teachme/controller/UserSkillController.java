@@ -1,7 +1,12 @@
 package com.teachme.teachme.controller;
 
+import com.teachme.teachme.dto.SkillWrapper;
 import com.teachme.teachme.service.UserSkillService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/user")

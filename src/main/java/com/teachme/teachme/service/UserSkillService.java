@@ -1,9 +1,18 @@
 package com.teachme.teachme.service;
 
+import com.teachme.teachme.dto.SkillWrapper;
 import com.teachme.teachme.entity.DAOUser;
+import com.teachme.teachme.entity.Skill;
 import com.teachme.teachme.repository.SkillRepository;
 import com.teachme.teachme.repository.UserDao;
+import com.teachme.teachme.security.SecurityUtils;
 import org.springframework.stereotype.Service;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Stream;
 
 @Service
 public class UserSkillService {
@@ -20,7 +29,10 @@ public class UserSkillService {
 
     public Stream<Skill> showSkills() {
         Optional<String> currentUsername = SecurityUtils.getCurrentUsername();
-        DAOUser user = userRepository.findByEmail(currentUsername.get());
+        Optional<DAOUser> userOptional = userRepository.findByEmail(currentUsername.get());
+
+        DAOUser user = userOptional.get();
+
         Set<Skill> skills = user.getSkills();
         Stream<Skill> skillStream = skills.stream().filter(skill -> skill.isVerificationstatus() == true);
         return skillStream;
@@ -30,8 +42,12 @@ public class UserSkillService {
     public Map<String, Object> addSkillstoUser(SkillWrapper skillWrapper) {
 
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        Optional<DAOUser> userOptional = userRepository.findByEmail(currentUsername);
+
+        DAOUser user = userOptional.get();
+
         Set<Skill> skillList = user.getSkills();
+
         for (int skillId: skillWrapper.getSkillIdList())
         {
             Optional<Skill> skillOptional = skillRepository.findById(skillId);
@@ -53,7 +69,10 @@ public class UserSkillService {
 
     public Map<String, Object> deleteSkillsofUser(SkillWrapper skillWrapper) {
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        Optional<DAOUser> userOptional = userRepository.findByEmail(currentUsername);
+
+        DAOUser user = userOptional.get();
+
         Set<Skill> skillList = user.getSkills();
 
         for (int skillId: skillWrapper.getSkillIdList())
