@@ -39,7 +39,7 @@ public class JwtTokenUtil implements Serializable {
 
         long now = (new Date()).getTime();
         Date validity;
-        validity = new Date(now + JWT_TOKEN_VALIDITY * 1000);
+        validity = new Date(now + JWT_TOKEN_VALIDITY * 2000);
 
         return Jwts.builder()
                 .setSubject(authentication.getName())
