@@ -1,27 +1,24 @@
 package com.teachme.teachme.entity;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "AUTHORITY")
 @Getter
 @Setter
-public class Authority implements Serializable {
+@ToString
+public class Authority {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column
-    @Size(min=6,max=15,message = "Authority Name Must Be Between of Length 6 to 15")
-    @NotBlank(message = "Name Can Not Be Empty")
+    @Column(name = "NAME", length = 50)
+    @NotNull
     private String name;
-
 
 }
