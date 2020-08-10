@@ -1,12 +1,8 @@
-package com.teachme.teachme.Service;
+package com.teachme.teachme.service;
 
 import com.teachme.teachme.dto.NewPasswordDTO;
 import com.teachme.teachme.entity.Authority;
 import com.teachme.teachme.entity.DAOUser;
-import com.teachme.teachme.entity.PasswordResetToken;
-import com.teachme.teachme.entity.RegistrationToken;
-import com.teachme.teachme.repository.PasswordResetTokenRepository;
-import com.teachme.teachme.repository.RegistrationTokenRepository;
 import com.teachme.teachme.repository.UserDao;
 import com.teachme.teachme.security.SecurityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;

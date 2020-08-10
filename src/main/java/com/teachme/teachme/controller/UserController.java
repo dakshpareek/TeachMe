@@ -3,7 +3,7 @@ package com.teachme.teachme.controller;
 import com.teachme.teachme.entity.DAOUser;
 import com.teachme.teachme.exceptionhandler.CustomException;
 
-import com.teachme.teachme.Service.UserService;
+import com.teachme.teachme.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

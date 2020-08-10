@@ -1,11 +1,11 @@
 package com.teachme.teachme.controller;
 
-import com.teachme.teachme.Service.PasswordResetService;
+import com.teachme.teachme.service.PasswordResetService;
 import com.teachme.teachme.dto.NewPasswordDTO;
 import com.teachme.teachme.entity.DAOUser;
 import com.teachme.teachme.entity.PasswordResetToken;
 import com.teachme.teachme.repository.UserDao;
-import com.teachme.teachme.Service.UserService;
+import com.teachme.teachme.service.UserService;
 import com.teachme.teachme.event.PasswordResetEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;

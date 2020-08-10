@@ -1,9 +1,8 @@
 package com.teachme.teachme.eventListener;
 
-import com.teachme.teachme.Service.OnRegistrationService;
+import com.teachme.teachme.service.OnRegistrationService;
 import com.teachme.teachme.entity.DAOUser;
 import com.teachme.teachme.Mail;
-import com.teachme.teachme.Service.UserService;
 import com.teachme.teachme.event.OnRegistrationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.MessageSource;

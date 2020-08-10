@@ -1,8 +1,7 @@
 package com.teachme.teachme.controller;
 
-import com.teachme.teachme.Service.RequestService;
+import com.teachme.teachme.service.RequestService;
 import com.teachme.teachme.dto.RequestDTO;
-import com.teachme.teachme.dto.RequestResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

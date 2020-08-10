@@ -1,10 +1,8 @@
-package com.teachme.teachme.Service;
+package com.teachme.teachme.service;
 
 import com.teachme.teachme.entity.DAOUser;
 import com.teachme.teachme.entity.PasswordResetToken;
-import com.teachme.teachme.entity.RegistrationToken;
 import com.teachme.teachme.repository.PasswordResetTokenRepository;
-import com.teachme.teachme.repository.RegistrationTokenRepository;
 import org.springframework.stereotype.Service;
 
 @Service

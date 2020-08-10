@@ -17,7 +17,7 @@ public class UserSkillService {
         this.skillRepository = skillRepository;
     }
 
-    /*
+
     public Stream<Skill> showSkills() {
         Optional<String> currentUsername = SecurityUtils.getCurrentUsername();
         DAOUser user = userRepository.findByEmail(currentUsername.get());
@@ -75,5 +75,5 @@ public class UserSkillService {
         return body;
     }
 
-     */
+
 }

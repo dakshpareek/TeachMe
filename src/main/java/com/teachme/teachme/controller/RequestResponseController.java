@@ -1,6 +1,6 @@
 package com.teachme.teachme.controller;
 
-import com.teachme.teachme.Service.RequestResponseService;
+import com.teachme.teachme.service.RequestResponseService;
 import com.teachme.teachme.dto.RequestResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

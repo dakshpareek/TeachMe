@@ -1,9 +1,9 @@
 package com.teachme.teachme.eventListener;
 
-import com.teachme.teachme.Service.PasswordResetService;
+import com.teachme.teachme.service.PasswordResetService;
 import com.teachme.teachme.entity.DAOUser;
 import com.teachme.teachme.Mail;
-import com.teachme.teachme.Service.UserService;
+import com.teachme.teachme.service.UserService;
 import com.teachme.teachme.event.PasswordResetEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;

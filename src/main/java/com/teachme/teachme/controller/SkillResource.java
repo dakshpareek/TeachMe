@@ -1,5 +1,7 @@
 package com.teachme.teachme.controller;
 
+import com.teachme.teachme.dto.SkillDTO;
+import com.teachme.teachme.dto.UpdateSkillDTO;
 import com.teachme.teachme.entity.Skill;
 import com.teachme.teachme.service.SkillService;
 import org.springframework.http.HttpStatus;
@@ -31,11 +33,6 @@ public class SkillResource {
         return skillService.getparticularskill( skill_id );
     }
 
-
-    /*
-    @PostMapping( "/skills" )
-    public ResponseEntity<String> addNewSkill(@RequestBody SkillDTO skillDTO ){
-
     @PostMapping("/skills")
     public ResponseEntity addNewSkill(@RequestBody SkillDTO skillDTO ){
 
@@ -61,11 +58,10 @@ public class SkillResource {
         return skillService.updateskilldetails( skill_id, skilldetails );
     }
 
-     */
-
     @DeleteMapping("/skills/{skill_id}")
     public ResponseEntity<?> deleteSkill(@PathVariable int skill_id)
     {
         return new ResponseEntity(skillService.deleteSkill(skill_id),HttpStatus.OK);
     }
+
 }

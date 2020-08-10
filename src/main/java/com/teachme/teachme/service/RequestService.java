@@ -1,22 +1,17 @@
-package com.teachme.teachme.Service;
+package com.teachme.teachme.service;
 
 import com.teachme.teachme.dto.RequestDTO;
-import com.teachme.teachme.dto.RequestResponseDTO;
 import com.teachme.teachme.entity.DAOUser;
 import com.teachme.teachme.entity.Request;
-import com.teachme.teachme.entity.RequestResponse;
 import com.teachme.teachme.repository.RequestRepository;
-import com.teachme.teachme.repository.RequestResponseRepository;
 import com.teachme.teachme.repository.UserDao;
 import com.teachme.teachme.security.SecurityUtils;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class RequestService {

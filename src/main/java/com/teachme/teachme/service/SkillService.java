@@ -1,9 +1,15 @@
 package com.teachme.teachme.service;
 
+import com.teachme.teachme.dto.SkillDTO;
+import com.teachme.teachme.dto.UpdateSkillDTO;
+import com.teachme.teachme.entity.Authority;
+import com.teachme.teachme.entity.DAOUser;
+import com.teachme.teachme.exceptionhandler.CustomException;
 import com.teachme.teachme.repository.AuthorityRepository;
 import com.teachme.teachme.repository.UserDao;
 import com.teachme.teachme.repository.SkillRepository;
 import com.teachme.teachme.entity.Skill;
+import com.teachme.teachme.security.SecurityUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -54,7 +60,7 @@ public class SkillService {
         return new ResponseEntity<Skill>( skillOptional.get(), HttpStatus.OK );
     }
 
-    /*
+
     public Map<String, Object> addSkill(SkillDTO skillDTO){
 
         Optional<Skill> skillOptional = skillRepository.findByName( skillDTO.getName() );
@@ -70,7 +76,7 @@ public class SkillService {
 
         //now if user is not admin then save it to user also
         String currentUsername = SecurityUtils.getCurrentUsername().get();
-        DAOUser user = userRepository.findByEmail(currentUsername);
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
         Set<Authority> authorities = user.getAuthorities();
 
         Authority authority = authorityRepository.findByName("ROLE_ADMIN").get();
@@ -155,7 +161,7 @@ public class SkillService {
     }
 
 
-     */
+
 
     public Map<String, Object> deleteSkill(long skill_id) {
         //delete this skill from database and remove this skill from all associated projects

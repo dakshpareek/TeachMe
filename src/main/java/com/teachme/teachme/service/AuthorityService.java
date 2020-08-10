@@ -1,4 +1,4 @@
-package com.teachme.teachme.Service;
+package com.teachme.teachme.service;
 
 import com.teachme.teachme.entity.Authority;
 import com.teachme.teachme.dto.AuthorityDTO;

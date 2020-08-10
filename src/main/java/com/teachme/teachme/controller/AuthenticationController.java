@@ -1,14 +1,16 @@
 package com.teachme.teachme.controller;
 
-import com.teachme.teachme.Service.OnRegistrationService;
+import com.teachme.teachme.service.OnRegistrationService;
 import com.teachme.teachme.dto.UserDTO;
 import com.teachme.teachme.entity.DAOUser;
 import com.teachme.teachme.entity.RegistrationToken;
-import com.teachme.teachme.Service.UserService;
+import com.teachme.teachme.service.UserService;
 import com.teachme.teachme.event.OnRegistrationEvent;
 import com.teachme.teachme.jwt.JwtTokenUtil;
+
 import com.teachme.teachme.security.JwtRequest;
 import com.teachme.teachme.security.JwtResponse;
+
 import com.teachme.teachme.security.JwtUserDetailsService;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
@@ -74,6 +76,7 @@ public class AuthenticationController {
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
         Authentication authentication = authenticate(authenticationRequest.getEmail(), bcryptEncoder.encode( authenticationRequest.getPassword() ) );
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         final String token = jwtTokenUtil.createToken(authentication);
