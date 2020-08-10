@@ -15,7 +15,6 @@ public class Mail {
         email.setSubject( subject );
         email.setText( message + "\r\n" + "http://localhost:8080" + confirmationurl );
         return email;
-
     }
 
 }
