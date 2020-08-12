@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Transactional
@@ -19,5 +20,7 @@ public interface ContractLogRepository extends JpaRepository<ContractLogs, Long>
     List<ContractLogs> findAllByIdAndUpdateRequested(long id,boolean isRequested);
 
     List<ContractLogs> findAllByIdAndUpdateRequestedAndIsVerified(long id,boolean isRequested,boolean isVerified);
+
+    Optional<ContractLogs> findByIdAndRequestContract(long id,long contract_id);
 
 }

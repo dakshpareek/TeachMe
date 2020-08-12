@@ -17,4 +17,9 @@ public interface RequestContractRepository extends JpaRepository<RequestContract
     List<RequestContract> findAllByTeacher( DAOUser teacher );
 
     Optional<RequestContract> findByRequest(Request request);
+
+    Optional<RequestContract> findById(long id);
+
+    //Optional<RequestContract> findByIdAndStudent(long contract_id,DAOUser student);
+
 }
