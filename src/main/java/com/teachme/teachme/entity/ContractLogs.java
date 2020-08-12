@@ -1,8 +1,11 @@
 package com.teachme.teachme.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -23,8 +26,15 @@ public class ContractLogs {
     private long id;
 
     /*
-    * SPACE TO ADD CONTRACT ID AND CONTRACT TYPE
-    * */
+     * SPACE TO ADD CONTRACT ID AND CONTRACT TYPE
+     * */
+
+
+    @ManyToOne
+    @JoinColumn(name="RequestContract")
+    @JsonIgnore
+    private RequestContract requestContract;
+
 
     @NotBlank(message = "Log message can not be empty")
     @Column

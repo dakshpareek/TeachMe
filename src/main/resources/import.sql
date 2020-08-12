@@ -50,5 +50,15 @@ INSERT INTO COURSE_RESPONSES(ID,MESSAGE,proposed_Price,status,USER,course) VALUE
 INSERT INTO COURSE_RESPONSES(ID,MESSAGE,proposed_Price,status,USER,course) VALUES (103,"Help Me With This Course",10.99,0,3,1);
 
 
-INSERT INTO CONTRACT_LOGS(ID,log_Message,created_Date,end_Date,lecture_Duration,is_verified,update_requested) VALUES (1,"This Log","2020-02-12 02:30:00","2020-02-12 03:20:00",50,0,0);
-INSERT INTO CONTRACT_LOGS(ID,log_Message,created_Date,end_Date,lecture_Duration,is_verified,update_requested) VALUES (2,"This 2nd Log","2019-02-12 02:30:00","2019-02-12 03:20:00",50,0,0);
+
+INSERT INTO REQUEST(id,title,description,offered_price,is_Hourly_Price,user_id,is_closed,is_public) VALUES (1001,"Help Me","Spring Boot",51,1,2,0,1);
+
+INSERT INTO REQUEST_SKILL(REQUEST_ID,SKILL_ID) VALUES (1001,1);
+
+INSERT INTO REQUEST_RESPONSE(id,is_accepted,is_hourly_price,message,proposed_price,request_id,user_id) VALUES (201,1,1,"I can help you out with spring",51,1001,3);
+
+INSERT INTO REQUEST_CONTRACT(id,is_accepted,is_completed,is_hourly_pricing,price,total_time_in_mins,request_id,student_id,teacher_id) VALUES (301,1,0,1,51,0,1001,2,3);
+
+INSERT INTO CONTRACT_LOGS(ID,log_Message,created_Date,end_Date,lecture_Duration,is_verified,update_requested,request_contract) VALUES (1,"This Log","2020-02-12 02:30:00","2020-02-12 03:20:00",50,0,0,301);
+
+INSERT INTO request_contract_contract_logs_set(request_contract_id,contract_logs_set_id) VALUES (301,1);

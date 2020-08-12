@@ -21,66 +21,66 @@ public class ContractLogController {
         this.contractLogService = contractLogService;
     }
 
-    //Create Log
-    @PostMapping("/contract/{id}/logs")
-    public ResponseEntity createLogs(@Valid @RequestBody ContractLogDTO contractLogDTO,@PathVariable long id)
+    //Create Log for request contract
+    @PostMapping("/request/contract/{id}/logs")
+    public ResponseEntity requestCreateLogs(@Valid @RequestBody ContractLogDTO contractLogDTO,@PathVariable long id)
     {
-        log.info("In createLogs");
+        log.info("In requestCreateLogs");
 
-        ResponseEntity responseEntity = new ResponseEntity(contractLogService.createLogs(contractLogDTO,id), HttpStatus.CREATED);
+        ResponseEntity responseEntity = new ResponseEntity(contractLogService.requestCreateLogs(contractLogDTO,id), HttpStatus.CREATED);
 
-        log.info("Exiting createLogs");
+        log.info("Exiting requestCreateLogs");
         return responseEntity;
     }
 
 
+
     //Update Log Status (Owner of Contract Will Update This Status)
-    @PatchMapping( "/contract/{id}/logs/{log_id}")
-    public ResponseEntity<String> changeStatus( @PathVariable long id, @PathVariable long log_id)
+    @PatchMapping( "/request/contract/{contract_id}/logs/{log_id}")
+    public ResponseEntity<String> requestChangeStatus( @PathVariable long contract_id, @PathVariable long log_id)
     {
-        log.info("In changeStatus");
+        log.info("In requestChangeStatus");
 
-        ResponseEntity responseEntity = new ResponseEntity(contractLogService.changeStatus(id,log_id), HttpStatus.OK);
+        ResponseEntity responseEntity = new ResponseEntity(contractLogService.requestChangeStatus(contract_id,log_id), HttpStatus.OK);
 
-        log.info("In changeStatus");
+        log.info("Exiting requestChangeStatus");
         return responseEntity;
     }
 
     //Request for log modification(when teacher or student want this to be changed)
-    @PatchMapping( "/contract/{id}/logs/{log_id}/update_request")
-    public ResponseEntity<String> updateRequested( @PathVariable long id, @PathVariable long log_id)
+    @PatchMapping( "/request/contract/{id}/logs/{log_id}/update_request")
+    public ResponseEntity<String> requestUpdateRequested( @PathVariable long id, @PathVariable long log_id)
     {
-        log.info("In updateRequested");
+        log.info("In requestUpdateRequested");
 
-        ResponseEntity responseEntity = new ResponseEntity(contractLogService.updateRequested(id,log_id), HttpStatus.OK);
+        ResponseEntity responseEntity = new ResponseEntity(contractLogService.requestUpdateRequested(id,log_id), HttpStatus.OK);
 
-        log.info("In updateRequested");
+        log.info("Exiting requestUpdateRequested");
         return responseEntity;
     }
 
 
-    @GetMapping( "/contract/{id}/logs/")
-    public ResponseEntity<String> getAllLogs( @PathVariable long id,@RequestParam(name = "verified",defaultValue = "-1") int isVerified,
-                                              @RequestParam(name = "update_request",defaultValue = "-1") int isRequested)
+    @GetMapping( "/request/contract/{id}/logs")
+    public ResponseEntity<String> requestGetAllLogs( @PathVariable long id,@RequestParam(name = "verified",defaultValue = "-1") int isVerified)
     {
-        log.info("In getAllLogs");
+        log.info("In requestGetAllLogs");
 
-        ResponseEntity responseEntity = new ResponseEntity(contractLogService.getAllLogsFilter(id,isVerified,isRequested), HttpStatus.OK);
+        ResponseEntity responseEntity = new ResponseEntity(contractLogService.requestGetAllLogs(id,isVerified), HttpStatus.OK);
 
-        log.info("In getAllLogs");
+        log.info("Exiting requestGetAllLogs");
 
         return responseEntity;
     }
 
 
-    @PutMapping("/contract/{id}/logs/{log_id}/")
-    public ResponseEntity<String> updateLog(@PathVariable long id,@PathVariable long log_id,@Valid @RequestBody ContractLogDTO contractLogDTO)
+    @PutMapping("/request/contract/{contract_id}/logs/{log_id}")
+    public ResponseEntity<String> requestUpdateLog(@PathVariable long contract_id,@PathVariable long log_id,@Valid @RequestBody ContractLogDTO contractLogDTO)
     {
-        log.info("In updateLog");
+        log.info("In requestUpdateLog");
 
-        ResponseEntity responseEntity = new ResponseEntity(contractLogService.updateLog(contractLogDTO,id,log_id), HttpStatus.CREATED);
+        ResponseEntity responseEntity = new ResponseEntity(contractLogService.requestUpdateLog(contractLogDTO,contract_id,log_id), HttpStatus.CREATED);
 
-        log.info("Exiting updateLog");
+        log.info("Exiting requestUpdateLog");
         return responseEntity;
     }
 
