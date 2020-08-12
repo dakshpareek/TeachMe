@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-public class RequestContract extends ContractDetails {
+public class CourseContract extends ContractDetails{
 
     @ManyToOne( fetch = FetchType.LAZY, optional = false)
     @JoinColumn( name = "student_id", nullable = false )
@@ -25,7 +25,9 @@ public class RequestContract extends ContractDetails {
     @JsonIgnore
     private DAOUser teacher;
 
-    @OneToOne( targetEntity = Request.class, fetch = FetchType.LAZY )
-    @JoinColumn( nullable = false, name = "request_id" )
-    private Request request;
+    @ManyToOne( fetch = FetchType.LAZY, optional = false)
+    @JoinColumn( name = "course_id", nullable = false )
+    @OnDelete( action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Course course;
 }
