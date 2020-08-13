@@ -33,14 +33,17 @@ public class RequestContract {
     private int price;
 
     private boolean isAccepted;
-    
-    
-    @OneToOne( targetEntity = DAOUser.class, fetch = FetchType.LAZY )
-    @JoinColumn( nullable = false, name = "student_id")
+
+    @ManyToOne( fetch = FetchType.LAZY, optional = false)
+    @JoinColumn( name = "student_id", nullable = false )
+    @OnDelete( action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private DAOUser student;
 
-    @OneToOne( targetEntity = DAOUser.class, fetch = FetchType.LAZY )
-    @JoinColumn( nullable = false, name = "teacher_id" )
+    @ManyToOne( fetch = FetchType.LAZY, optional = false)
+    @JoinColumn( name = "teacher_id", nullable = false )
+    @OnDelete( action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private DAOUser teacher;
 
     @OneToOne( targetEntity = Request.class, fetch = FetchType.LAZY )

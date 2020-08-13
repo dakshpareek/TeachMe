@@ -85,14 +85,4 @@ public class DAOUser {
                 mappedBy = "user" )
     private RequestResponse requestResponse;
 
-    @OneToOne( fetch = FetchType.LAZY,
-                cascade = CascadeType.ALL,
-                mappedBy = "student" )
-    private RequestContract requestContract;
-
-    @OneToOne( fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            mappedBy = "teacher" )
-    private RequestContract requestContract1;
-
 }
