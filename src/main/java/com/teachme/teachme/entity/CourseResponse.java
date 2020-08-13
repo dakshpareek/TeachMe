@@ -56,4 +56,5 @@ public class CourseResponse {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Course course;
+
 }

@@ -47,7 +47,18 @@ INSERT INTO COURSE_SKILL(COURSE_ID,SKILL_ID) VALUES (3,3);
 
 INSERT INTO COURSE_RESPONSES(ID,MESSAGE,proposed_Price,status,USER,course) VALUES (101,"Please Teach Me This",40.99,0,2,2);
 INSERT INTO COURSE_RESPONSES(ID,MESSAGE,proposed_Price,status,USER,course) VALUES (102,"Teach Me This",40.99,0,2,3);
-INSERT INTO COURSE_RESPONSES(ID,MESSAGE,proposed_Price,status,USER,course) VALUES (103,"Help Me With This Course",10.99,0,3,1);
+
+INSERT INTO COURSE_RESPONSES(ID,MESSAGE,proposed_Price,status,USER,course) VALUES (103,"Help Me With This Course",10.99,1,3,1);
+
+
+INSERT INTO COURSE_CONTRACT(id,is_accepted,is_completed,is_hourly_pricing,price,total_time_in_mins,course_id,student_id,teacher_id) VALUES (401,1,0,1,55,0,1,3,2);
+
+INSERT INTO CONTRACT_LOGS(ID,log_Message,created_Date,end_Date,lecture_Duration,is_verified,update_requested,course_contract) VALUES (501,"He taught me basics today","2020-02-13 01:30:00","2020-02-13 03:30:00",120,0,0,401);
+
+INSERT INTO course_contract_contract_logs_set(course_contract_id,contract_logs_set_id) VALUES (401,501);
+
+
+
 
 
 
@@ -62,3 +73,5 @@ INSERT INTO REQUEST_CONTRACT(id,is_accepted,is_completed,is_hourly_pricing,price
 INSERT INTO CONTRACT_LOGS(ID,log_Message,created_Date,end_Date,lecture_Duration,is_verified,update_requested,request_contract) VALUES (1,"This Log","2020-02-12 02:30:00","2020-02-12 03:20:00",50,0,0,301);
 
 INSERT INTO request_contract_contract_logs_set(request_contract_id,contract_logs_set_id) VALUES (301,1);
+
+

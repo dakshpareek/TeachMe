@@ -36,6 +36,11 @@ public class ContractLogs {
     private RequestContract requestContract;
 
 
+    @ManyToOne
+    @JoinColumn(name="CourseContract")
+    @JsonIgnore
+    private CourseContract courseContract;
+
     @NotBlank(message = "Log message can not be empty")
     @Column
     private String logMessage;

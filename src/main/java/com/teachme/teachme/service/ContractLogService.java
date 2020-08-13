@@ -1,11 +1,14 @@
 package com.teachme.teachme.service;
 
 import com.teachme.teachme.dto.ContractLogDTO;
+import com.teachme.teachme.dto.ContractLogUpdateDTO;
 import com.teachme.teachme.entity.ContractLogs;
+import com.teachme.teachme.entity.CourseContract;
 import com.teachme.teachme.entity.DAOUser;
 import com.teachme.teachme.entity.RequestContract;
 import com.teachme.teachme.exceptionhandler.CustomException;
 import com.teachme.teachme.repository.ContractLogRepository;
+import com.teachme.teachme.repository.CourseContractRepository;
 import com.teachme.teachme.repository.RequestContractRepository;
 import com.teachme.teachme.repository.UserDao;
 import com.teachme.teachme.security.SecurityUtils;
@@ -28,11 +31,14 @@ public class ContractLogService {
     private UserDao userRepository;
     private ContractLogs contractLogs;
     private RequestContractRepository requestContractRepository;
+    private CourseContractRepository courseContractRepository;
     public ContractLogService(ContractLogRepository contractLogRepository,
-                              UserDao userRepository,RequestContractRepository requestContractRepository) {
+                              UserDao userRepository,RequestContractRepository requestContractRepository,
+                              CourseContractRepository courseContractRepository) {
         this.contractLogRepository = contractLogRepository;
         this.userRepository = userRepository;
         this.requestContractRepository = requestContractRepository;
+        this.courseContractRepository = courseContractRepository;
     }
 
     public Object requestCreateLogs(ContractLogDTO contractLogDTO, long id) {
@@ -263,8 +269,8 @@ public class ContractLogService {
         }
 
         RequestContract contract = contractOptional.get();
-        //check if this user owns this contract
-        if(contract.getStudent() != user)
+        //check if this user belongs to this contract
+        if(contract.getStudent() != user && contract.getTeacher() != user)
         {
             log.info("Not Authorized for this request");
             throw new CustomException("Not Authorized for this request",HttpStatus.BAD_REQUEST,"/");
@@ -399,5 +405,301 @@ public class ContractLogService {
         log.info("In requestUpdateLog service");
         return contractLog;
 
+    }
+
+
+    public Set<ContractLogs> courseGetAllLogs(long contract_id, int isVerified) {
+
+        log.info("In courseGetAllLogs service");
+
+        //get user
+        String currentUsername = SecurityUtils.getCurrentUsername().get();
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
+
+        //get all logs of this contract if this belongs to user
+        Optional<CourseContract> contractOptional = courseContractRepository.findById(contract_id);
+        if(contractOptional.isEmpty())
+        {
+            throw new CustomException("Contract Not Found",HttpStatus.NOT_FOUND,"/");
+        }
+
+        CourseContract contract = contractOptional.get();
+
+        //check if this user belongs to this contract
+        if(contract.getStudent() != user && contract.getTeacher() != user)
+        {
+            log.info("Not Authorized for this request");
+            throw new CustomException("Not Authorized for this request",HttpStatus.BAD_REQUEST,"/");
+        }
+
+        Set<ContractLogs> contractLogs = new HashSet<>();
+        if(isVerified == -1)
+        {
+            contractLogs = contract.getContractLogsSet();
+        }
+        else
+        {
+            for(ContractLogs current_log : contract.getContractLogsSet())
+            {
+                if(current_log.isVerified() == (isVerified > 0))
+                {
+                    contractLogs.add(current_log);
+                }
+            }
+            //contractLogs = (Set<ContractLogs>) contract.getContractLogsSet().stream().filter(contractLogs1 -> contractLogs1.isVerified() == (isVerified > 0));
+        }
+
+
+        log.info("Exiting courseGetAllLogs service");
+
+        return contractLogs;
+
+    }
+
+    public Object courseCreateLogs(ContractLogDTO contractLogDTO, long contract_id) {
+        log.info("In courseCreateLogs service");
+
+        //get user
+        String currentUsername = SecurityUtils.getCurrentUsername().get();
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
+
+        //check this contract exists and it belongs to this user (check for both end)
+
+        boolean isOwner = false;
+        Optional<CourseContract> contractOptional = courseContractRepository.findById(contract_id);
+
+        if(contractOptional.isEmpty())
+        {
+            log.info("Not A COURSE contract");
+            throw new CustomException("Contract Not Found", HttpStatus.NOT_FOUND,"/");
+
+        }
+
+        CourseContract contract = contractOptional.get();
+
+        //now check if this belongs to this logged in user
+        //check if this user is owner of this contract
+        //one who pays money is the owner of contract
+        if(contract.getStudent() == user)
+        {
+            log.info("User is owner of this contract");
+            isOwner = true;
+        }
+        else if(contract.getTeacher() == user)
+        {
+            log.info("User is not owner of this contract");
+        }
+        else
+        {
+            throw new CustomException("User Not Belong To This Contract",HttpStatus.BAD_REQUEST,"/");
+        }
+
+
+
+        //after all checks store this DTO
+        ContractLogs contractLog = new ContractLogs();
+
+
+        contractLog.setLogMessage(contractLogDTO.getLogMessage());
+        contractLog.setCreatedDate(contractLogDTO.getCreatedDate());
+        contractLog.setEndDate(contractLogDTO.getEndDate());
+
+        //GET TIME DIFFERENCE AND STORE IN DURATION
+        LocalDateTime tempDateTime = LocalDateTime.from( contractLog.getCreatedDate() );
+
+        /*
+        long hours = tempDateTime.until( log.getEndDate(), ChronoUnit.HOURS );
+        tempDateTime = tempDateTime.plusHours( hours );
+
+         */
+
+        long minutes = tempDateTime.until( contractLog.getEndDate(), ChronoUnit.MINUTES );
+        BigDecimal inMinutes = new BigDecimal(minutes);
+
+        contractLog.setLectureDuration(inMinutes);
+
+        if(isOwner)
+        {
+            //if this user is owner then set isVerified to true
+            contractLog.setVerified(true);
+        }
+
+        contractLogRepository.save(contractLog);
+
+
+        //save contract also
+        //map log to contract also
+        contract.addContract(contractLog);
+
+        courseContractRepository.save(contract);
+
+        log.info("Exiting courseCreateLogs service");
+        return contractLog;
+
+    }
+
+    public Object courseChangeStatus(long contract_id, long log_id) {
+        log.info("In courseChangeStatus service");
+
+        //get user
+        String currentUsername = SecurityUtils.getCurrentUsername().get();
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
+
+        //Here we will check whether this user owns this contract or not
+        //Check if this log is there and it is a requestContract
+        //Optional<ContractLogs> contractLogsOptional = contractLogRepository.findByIdAndRequestContract(log_id, contract_id);
+        Optional<ContractLogs> contractLogsOptional = contractLogRepository.findById(log_id);
+
+        if(contractLogsOptional.isEmpty())
+        {
+            log.info("Log Not Found");
+            throw new CustomException("Log Not Found", HttpStatus.NOT_FOUND,"/");
+        }
+
+        ContractLogs contractLog = contractLogsOptional.get();
+
+        //check if this is a courseContract
+        CourseContract courseContract = contractLog.getCourseContract();
+
+        if(courseContract == null)
+        {
+            log.info("Not a COURSE contract");
+            throw new CustomException("Not a COURSE contract", HttpStatus.BAD_REQUEST,"/");
+        }
+
+        if(courseContract.getStudent() == user)
+        {
+            contractLog.setVerified(true);
+            log.info("User is owner of request");
+        }
+        else{
+            //if not belong to anyone then throw exception
+            throw new CustomException("Not authorized to change status", HttpStatus.BAD_REQUEST,"/");
+        }
+
+
+
+        contractLogRepository.save(contractLog);
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("message","Successfully Changed Status Of Log");
+        body.put("status",200);
+        body.put("path","/");
+
+        log.info("Exiting courseChangeStatus service");
+        return body;
+    }
+
+    public Object courseUpdateRequested(long contract_id, long log_id) {
+        log.info("In courseUpdateRequested service");
+
+        //get user
+        String currentUsername = SecurityUtils.getCurrentUsername().get();
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
+
+        //Here we will check whether this user belongs to this contract or not (this user is not owner of contract)
+        //Optional<RequestContract> requestContract = requestContractRepository.findByIdAndStudent(contract_id, user);
+        Optional<CourseContract> courseContract = courseContractRepository.findById(contract_id);
+
+
+        if(courseContract.isEmpty())
+        {
+            log.info("Contract not found or not authorized to modify log");
+            throw new CustomException("Contract not found or not authorized to modify log", HttpStatus.NOT_FOUND,"/");
+        }
+
+        //check if this is owner then skip this because he can not ask for change in log
+        if (courseContract.get().getStudent() == user)
+        {
+            log.info("Not authorized to request modify log");
+            throw new CustomException("Not authorized to request modify log", HttpStatus.BAD_REQUEST,"/");
+        }
+
+        Optional<ContractLogs> contractLogsOptional = contractLogRepository.findById(log_id);
+
+        if(contractLogsOptional.isEmpty())
+        {
+            log.info("Log not found");
+            throw new CustomException("Log not found", HttpStatus.NOT_FOUND,"/");
+        }
+        ContractLogs contractLog = contractLogsOptional.get();
+        //request for update
+        contractLog.setUpdateRequested(true);
+
+        //save this contract now
+        contractLogRepository.save(contractLog);
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("message","Successfully Requested for modification");
+        body.put("status",200);
+        body.put("path","/");
+
+        log.info("Exiting courseUpdateRequested service");
+        return body;
+    }
+
+    public Object courseUpdateLog(ContractLogUpdateDTO contractLogDTO, long contract_id, long log_id) {
+        log.info("In courseUpdateLog service");
+
+        //get user
+        String currentUsername = SecurityUtils.getCurrentUsername().get();
+
+        DAOUser user = userRepository.findByEmail(currentUsername).get();
+
+        //get this log of this contract if this belongs to this user(owner)
+        Optional<CourseContract> contractOptional = courseContractRepository.findById(contract_id);
+        if(contractOptional.isEmpty())
+        {
+            throw new CustomException("Contract Not Found",HttpStatus.NOT_FOUND,"/");
+        }
+
+        CourseContract contract = contractOptional.get();
+        //check if this user owns this contract
+        if(contract.getStudent() != user)
+        {
+            log.info("Not Authorized for this request");
+            throw new CustomException("Not Authorized for this request",HttpStatus.BAD_REQUEST,"/");
+        }
+
+        ContractLogs contractLog = null;
+
+        for(ContractLogs current_log : contract.getContractLogsSet())
+        {
+            if(current_log.getId() == log_id)
+            {
+                contractLog = current_log;
+                break;
+            }
+        }
+
+
+
+        //ContractLogs contractLog = contractLogRepository.findById(log_id).get();
+
+        if(contractLogDTO.getLogMessage() != null)
+            contractLog.setLogMessage(contractLogDTO.getLogMessage());
+
+        if(contractLogDTO.getCreatedDate() != null)
+            contractLog.setCreatedDate(contractLogDTO.getCreatedDate());
+
+        if(contractLogDTO.getEndDate() != null)
+            contractLog.setEndDate(contractLogDTO.getEndDate());
+
+        //calculate new duration
+        LocalDateTime tempDateTime = LocalDateTime.from( contractLog.getCreatedDate() );
+
+        long minutes = tempDateTime.until( contractLog.getEndDate(), ChronoUnit.MINUTES );
+        BigDecimal inMinutes = new BigDecimal(minutes);
+
+        contractLog.setLectureDuration(inMinutes);
+
+        //change updateRequested status
+        contractLog.setUpdateRequested(false);
+
+        //save this updated log
+        contractLogRepository.save(contractLog);
+
+        log.info("In courseUpdateLog service");
+        return contractLog;
     }
 }

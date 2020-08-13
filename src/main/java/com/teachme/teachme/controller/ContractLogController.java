@@ -1,6 +1,7 @@
 package com.teachme.teachme.controller;
 
 import com.teachme.teachme.dto.ContractLogDTO;
+import com.teachme.teachme.dto.ContractLogUpdateDTO;
 import com.teachme.teachme.service.ContractLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -88,20 +89,68 @@ public class ContractLogController {
     * WRITE LOGIC OF DELETION OF LOG
     * */
 
+    //Logic For Course Log
 
-    /*
-    @GetMapping( "/contract/{id}/logs/update_request")
-    public ResponseEntity<String> getAllRequestedLogs( @PathVariable long id,@RequestParam(name = "update_request",defaultValue = "0") int isRequested)
+
+    @GetMapping( "/course/contract/{contract_id}/logs")
+    public ResponseEntity<String> courseGetAllLogs( @PathVariable long contract_id,@RequestParam(name = "verified",defaultValue = "-1") int isVerified)
     {
-        log.info("In getAllRequestedLogs");
+        log.info("In courseGetAllLogs");
 
-        ResponseEntity responseEntity = new ResponseEntity(contractLogService.getAllRequestedLogs(id,isRequested), HttpStatus.OK);
+        ResponseEntity responseEntity = new ResponseEntity(contractLogService.courseGetAllLogs(contract_id,isVerified), HttpStatus.OK);
 
-        log.info("In getAllRequestedLogs");
+        log.info("Exiting courseGetAllLogs");
 
         return responseEntity;
     }
 
-     */
+
+    //Create Log for course contract
+    @PostMapping("/course/contract/{contract_id}/logs")
+    public ResponseEntity courseCreateLogs(@Valid @RequestBody ContractLogDTO contractLogDTO,@PathVariable long contract_id)
+    {
+        log.info("In courseCreateLogs");
+
+        ResponseEntity responseEntity = new ResponseEntity(contractLogService.courseCreateLogs(contractLogDTO,contract_id), HttpStatus.CREATED);
+
+        log.info("Exiting courseCreateLogs");
+        return responseEntity;
+    }
+
+    //Update Log Status (Owner of Contract Will Update This Status)
+    @PatchMapping( "/course/contract/{contract_id}/logs/{log_id}")
+    public ResponseEntity<String> courseChangeStatus( @PathVariable long contract_id, @PathVariable long log_id)
+    {
+        log.info("In courseChangeStatus");
+
+        ResponseEntity responseEntity = new ResponseEntity(contractLogService.courseChangeStatus(contract_id,log_id), HttpStatus.OK);
+
+        log.info("Exiting courseChangeStatus");
+        return responseEntity;
+    }
+
+
+    //Request for log modification(when teacher or student want this to be changed)
+    @PatchMapping( "/course/contract/{contract_id}/logs/{log_id}/update_request")
+    public ResponseEntity<String> courseUpdateRequested( @PathVariable long contract_id, @PathVariable long log_id)
+    {
+        log.info("In courseUpdateRequested");
+
+        ResponseEntity responseEntity = new ResponseEntity(contractLogService.courseUpdateRequested(contract_id,log_id), HttpStatus.OK);
+
+        log.info("Exiting courseUpdateRequested");
+        return responseEntity;
+    }
+
+    @PutMapping("/course/contract/{contract_id}/logs/{log_id}")
+    public ResponseEntity<String> courseUpdateLog(@PathVariable long contract_id,@PathVariable long log_id,@Valid @RequestBody ContractLogUpdateDTO contractLogDTO)
+    {
+        log.info("In courseUpdateLog");
+
+        ResponseEntity responseEntity = new ResponseEntity(contractLogService.courseUpdateLog(contractLogDTO,contract_id,log_id), HttpStatus.OK);
+
+        log.info("Exiting courseUpdateLog");
+        return responseEntity;
+    }
 
 }
