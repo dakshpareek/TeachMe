@@ -46,13 +46,13 @@ public class CourseResponse {
     //Relationships with others entities
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "USER", nullable = false)
+    @JoinColumn(name = "USER_ID", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private DAOUser user;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "COURSE", nullable = false)
+    @JoinColumn(name = "COURSE_ID", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Course course;
