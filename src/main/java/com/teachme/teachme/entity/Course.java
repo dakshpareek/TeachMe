@@ -61,7 +61,7 @@ public class Course {
     private LocalDateTime updatedDate;
 
     //Relationships with others entities
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "COURSE_SKILL",
             joinColumns = {@JoinColumn(name = "COURSE_ID", referencedColumnName = "ID")},
@@ -69,7 +69,7 @@ public class Course {
     private Set<Skill> skills = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "USER", nullable = false)
+    @JoinColumn(name = "USER_ID", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private DAOUser user;
