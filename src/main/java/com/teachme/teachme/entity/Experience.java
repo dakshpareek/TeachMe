@@ -46,7 +46,7 @@ public class Experience {
     private Boolean currently_working;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "DaoUser_id", nullable = false)
+    @JoinColumn(name = "USER_ID", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private DAOUser user;

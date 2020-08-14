@@ -85,4 +85,19 @@ public class DAOUser {
                 mappedBy = "user" )
     private RequestResponse requestResponse;
 
+
+    @OneToMany(targetEntity = Experience.class, fetch = FetchType.LAZY)
+    private Set<Experience> experiences = new HashSet<>();
+
+    private Set<Experience> getExperiences()
+    {
+        return experiences;
+    }
+
+    public void addExperience(Experience experience)
+    {
+        experiences.add(experience);
+        experience.setUser(this);
+    }
+
 }
