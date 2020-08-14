@@ -44,10 +44,10 @@ INSERT INTO COURSE_SKILL(COURSE_ID,SKILL_ID) VALUES (1,2);
 INSERT INTO COURSE_SKILL(COURSE_ID,SKILL_ID) VALUES (2,3);
 INSERT INTO COURSE_SKILL(COURSE_ID,SKILL_ID) VALUES (3,3);
 
-INSERT INTO COURSE_RESPONSES(ID,MESSAGE,proposed_Price,status,USER_ID,course) VALUES (101,'Please Teach Me This',40.99,0,2,2);
-INSERT INTO COURSE_RESPONSES(ID,MESSAGE,proposed_Price,status,USER_ID,course) VALUES (102,'Teach Me This',40.99,0,2,3);
+INSERT INTO COURSE_RESPONSES(ID,MESSAGE,proposed_Price,status,USER_ID,course_id) VALUES (101,'Please Teach Me This',40.99,false,2,2);
+INSERT INTO COURSE_RESPONSES(ID,MESSAGE,proposed_Price,status,USER_ID,course_id) VALUES (102,'Teach Me This',40.99,false,2,3);
 
-INSERT INTO COURSE_RESPONSES(ID,MESSAGE,proposed_Price,status,USER_ID,course) VALUES (103,'Help Me With This Course',10.99,1,3,1);
+INSERT INTO COURSE_RESPONSES(ID,MESSAGE,proposed_Price,status,USER_ID,course_id) VALUES (103,'Help Me With This Course',10.99,true,3,1);
 
 
 INSERT INTO COURSE_CONTRACT(id,is_accepted,is_completed,is_hourly_pricing,price,total_time_in_mins,course_id,student_id,teacher_id) VALUES (401,true,false,true,55,0,1,3,2);
@@ -69,7 +69,7 @@ INSERT INTO REQUEST_RESPONSE(id,is_accepted,is_hourly_price,message,proposed_pri
 
 INSERT INTO REQUEST_CONTRACT(id,is_accepted,is_completed,is_hourly_pricing,price,total_time_in_mins,request_id,student_id,teacher_id) VALUES (301,true,false,true,51,0,1001,2,3);
 
-INSERT INTO CONTRACT_LOGS(ID,log_Message,created_Date,end_Date,lecture_Duration,is_verified,update_requested,request_contract) VALUES (1,'This Log','2020-02-12 02:30:00','2020-02-12 03:20:00',50,false,0,301);
+INSERT INTO CONTRACT_LOGS(ID,log_Message,created_Date,end_Date,lecture_Duration,is_verified,update_requested,request_contract) VALUES (1,'This Log','2020-02-12 02:30:00','2020-02-12 03:20:00',50,false,false,301);
 
 INSERT INTO request_contract_contract_logs_set(request_contract_id,contract_logs_set_id) VALUES (301,1);
 
