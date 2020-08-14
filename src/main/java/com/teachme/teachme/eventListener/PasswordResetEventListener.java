@@ -16,10 +16,10 @@ import java.util.UUID;
 @Component
 public class PasswordResetEventListener implements ApplicationListener<PasswordResetEvent> {
 
-    @Autowired
+    //@Autowired
     private UserService userService;
 
-    @Autowired
+    //@Autowired
     private MessageSource messageSource;
 
     /*
@@ -27,24 +27,24 @@ public class PasswordResetEventListener implements ApplicationListener<PasswordR
     private JavaMailSender mailSender;
     */
 
-    @Autowired
+    //@Autowired
     private Mail mail;
 
-    @Autowired
+    //@Autowired
     private PasswordResetService passwordResetService;
 
-    @Autowired
+    //@Autowired
     public PasswordResetEventListener(){}
 
 
-    /*
-    public PasswordResetEventListener(UserService userService, MessageSource messageSource, Mail mail, PasswordResetService passwordResetService ){
+
+    public PasswordResetEventListener(UserService userService, MessageSource messageSource, Mail mail, PasswordResetService passwordResetService ) {
 
         this.userService = userService;
         this.messageSource = messageSource;
         this.mail = mail;
         this.passwordResetService = passwordResetService;
-    }*/
+    }
 
     @Override
     public void onApplicationEvent(PasswordResetEvent passwordResetEvent) {
