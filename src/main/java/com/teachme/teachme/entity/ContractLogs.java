@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @ToString
 public class ContractLogs {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     /*
