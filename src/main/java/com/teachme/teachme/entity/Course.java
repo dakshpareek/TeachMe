@@ -62,6 +62,7 @@ public class Course {
 
     //Relationships with others entities
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JsonIgnore
     @JoinTable(
             name = "COURSE_SKILL",
             joinColumns = {@JoinColumn(name = "COURSE_ID", referencedColumnName = "ID")},
