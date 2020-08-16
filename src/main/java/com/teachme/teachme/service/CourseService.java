@@ -41,7 +41,7 @@ public class CourseService {
         DAOUser user = userRepository.findByEmail(currentUsername).get();
 
         List<Course> courses = courseRepository.findAllByUserId(user.getId());
-
+        log.info("Data: "+courses);
         log.info("Exiting getAllCourses service");
         return courses;
     }
