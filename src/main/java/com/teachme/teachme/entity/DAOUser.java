@@ -20,7 +20,7 @@ import java.util.Set;
 //@NoArgsConstructor
 public class DAOUser {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @NotBlank(message = "Name can not be empty")

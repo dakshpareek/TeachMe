@@ -15,7 +15,7 @@ import java.util.Date;
 public class ContractDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long Id;
 
     private Date creationDate;

@@ -24,7 +24,7 @@ import java.util.Set;
 public class Request {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
     @NotBlank( message = "Title cannot be blank")

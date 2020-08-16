@@ -21,7 +21,7 @@ import java.util.Set;
 @ToString
 public class Experience {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @NotBlank(message = "Name can not be empty")

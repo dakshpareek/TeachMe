@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Setter
 public class Authority implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @Column

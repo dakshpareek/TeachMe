@@ -24,7 +24,7 @@ import java.util.Set;
 @ToString
 public class Course {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @NotBlank(message = "Title can not be empty")
