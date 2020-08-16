@@ -44,6 +44,7 @@ public class CourseController {
         ResponseEntity responseEntity = new ResponseEntity(courseService.getCourses(id), HttpStatus.OK);
 
         log.info("Exiting getCourses");
+
         return responseEntity;
     }
 

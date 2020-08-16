@@ -91,7 +91,7 @@ public class CourseService {
         return body;
     }
 
-    public Course getCourses(long id) {
+    public Map<String, Object> getCourses(long id) {
         log.info("In getCourses service");
         //get user
         String currentUsername = SecurityUtils.getCurrentUsername().get();
@@ -101,7 +101,12 @@ public class CourseService {
         if(courseOptional.isPresent())
         {
             log.info("Exiting getCourses service");
-            return courseOptional.get();
+            Map<String, Object> body = new LinkedHashMap<>();
+
+            body.put("message",courseOptional.get());
+            body.put("status",200);
+            //return courseOptional.get();
+            return body;
         }
 
         //if not found then raise exception
